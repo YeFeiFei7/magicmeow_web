@@ -1,21 +1,32 @@
-import os
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+from flask_cors import CORS
+from config import Config
 
-class Config:
-    # Secret key for session management, with a fallback default for safety
-    SECRET_KEY = os.environ.get('SECRET_KEY')
+# Initialize extensions
+db = SQLAlchemy()
+login_manager = LoginManager()
+cors = CORS()
 
-    # Database configuration
-    DATABASE_URL = os.environ.get('DATABASE_URL')
-    SQLALCHEMY_DATABASE_URI = DATABASE_URL  # ✅ 添加这一行
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config)
 
+    # Initialize extensions
+    db.init_app(app)
+    login_manager.init_app(app)
+    cors.init_app(app)
 
-    # SQLAlchemy settings
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    # Configure login manager
+    login_manager.login_view = 'auth.login'
 
-    # Google OAuth configuration
-    GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
-    GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
-    GOOGLE_REDIRECT_URI = os.environ.get('PROD_BASE_URL') if os.environ.get('FLASK_ENV') == 'production' else os.environ.get('LOCAL_BASE_URL')
+    # Register blueprints
+    from app.routes import auth, main
+    app.register_blueprint(auth.bp)
+    app.register_blueprint(main.bp)
 
-    # Flask environment
-    FLASK_ENV = os.environ.get('FLASK_ENV', 'production')
+    return app
+
+# Create app instance
+app = create_app()
