@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MagicMeow Welcome</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/welcome.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&family=Jua&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="logo">
+        <img src="{{ url_for('static', filename='images/m.png') }}" alt="Logo">
+        agicMeow
+    </div>
+    <div class="container">
+        <img src="{{ url_for('static', filename='images/welcome.gif') }}" alt="Welcome Gif" class="gif">
+        <div class="text">
+            <div class="welcome-text">Hi, <span class="username">{{ username }}</span></div>
+            <div class="welcome-text">Welcome to MagicMeow</div>
+        </div>
+    </div>
+    <script>
+        setTimeout(() => {
+            window.location.href = '{{ url_for("main") }}';
+        }, 4000);
+    </script>
+</body>
+</html>

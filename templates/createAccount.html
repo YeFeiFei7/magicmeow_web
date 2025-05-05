@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MagicMeow Sign Up</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/create_account.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&family=Jua&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="signup-box">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/m.png') }}" alt="Logo">
+                agicMeow
+            </div>
+            <div class="form-box">
+                <h1>Welcome, new user!</h1>
+                <h2>Create account</h2>
+                <form action="{{ url_for('create_account') }}" method="POST">
+                    {{ form.hidden_tag() }}
+                    {{ form.username(class="input-field", placeholder="new user name") }}
+                    {{ form.password(class="input-field", placeholder="password", id="password") }}
+                    <div class="tooltip" id="tooltip">
+                        <ul>
+                            <li>Uppercase letters (A–Z)</li>
+                            <li>Lowercase letters (a–z)</li>
+                            <li>Numbers (0–9)</li>
+                            <li>Special characters (e.g. !@#$%^&*)</li>
+                        </ul>
+                    </div>
+                    {{ form.confirm_password(class="input-field", placeholder="Confirm Password") }}
+                    <div class="error" style="color: red;">
+                        {% with messages = get_flashed_messages(category_filter=['error']) %}
+                            {% if messages %}
+                                {{ messages[0] }}
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    <button type="submit" class="signup-btn">Create Account</button>
+                </form>
+            </div>
+        </div>
+        <div class="separator"></div>
+        <div class="image-box">
+            <img src="{{ url_for('static', filename='images/cats.png') }}" alt="Cute cat illustration">
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/create_account.js') }}"></script>
+</body>
+</html>

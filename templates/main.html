@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MagicMeow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div class="logoMain">
+        <img src="{{ url_for('static', filename='images/m.png') }}" alt="Logo">
+        <h1>agicMeow</h1>
+    </div>
+
+    <div class="auth-buttons">
+        <a href="{{ url_for('login') }}" class="login">Login</a>
+        <a href="{{ url_for('google_login') }}" class="signup"><img src="{{ url_for('static', filename='images/google.png') }}" alt="Google">Sign Up</a>
+    </div>
+
+    <h1 class="logo">MagicMeow</h1>
+    <div class="search-container">
+        <input type="text" class="search-box" placeholder="Ask Bunny..." id="chat-input">
+        <button class="search-button" onclick="sendChat()"><img src="{{ url_for('static', filename='images/send.png') }}" alt="Send"></button>
+    </div>
+
+    <div class="icon-buttons">
+        <button onclick="checkAuth('statistic')"><img src="{{ url_for('static', filename='images/statistics.png') }}" alt="Statistics">Data Statistic</button>
+        <button onclick="checkAuth('addPlan')"><img src="{{ url_for('static', filename='images/addPlan.png') }}" alt="Add Plan" style="width:35px; height:auto;">Add Plan</button>
+        <button onclick="checkAuth('setting_goals')"><img src="{{ url_for('static', filename='images/goals.png') }}" alt="Goals" style="margin-right:0px">Setting Goals</button>
+    </div>
+
+    <!-- Login Prompt Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <img src="{{ url_for('static', filename='images/icon-bunny.png') }}" alt="Bunny Icon" class="modal-icon">
+            <h2>Oops! You need to log in!</h2>
+            <p>Please log in or sign up to access this feature.</p>
+            <div class="modal-buttons">
+                <button onclick="redirectToLogin()">Login</button>
+                <button onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
