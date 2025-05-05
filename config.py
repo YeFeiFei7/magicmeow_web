@@ -1,7 +1,7 @@
 import os
 
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY', 'default-secret-key')  # 提供默认值
+    SECRET_KEY = os.environ.get('SECRET_KEY')  # 提供默认值
     DATABASE_URL = os.environ.get('DATABASE_URL')
     if DATABASE_URL:
         SQLALCHEMY_DATABASE_URI = DATABASE_URL.replace("postgres://", "postgresql://")
