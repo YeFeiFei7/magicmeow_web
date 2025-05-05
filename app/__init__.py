@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from config import Config
 from dotenv import load_dotenv
+from app.routes import *
+
 load_dotenv()
 
 
@@ -16,8 +18,6 @@ def create_app():
     db.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
-
-    from app.routes import *
 
     from app.routes.auth import auth_bp
     from app.routes.main import main_bp
