@@ -2,6 +2,9 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from config import Config
+from dotenv import load_dotenv
+load_dotenv()
+
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -18,5 +21,6 @@ def create_app():
     from app.routes.main import main_bp
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(main_bp)
+
 
     return app
