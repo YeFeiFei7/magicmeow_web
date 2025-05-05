@@ -11,16 +11,10 @@ def index():
 def main():
     if not current_user.is_authenticated:
         return render_template('main.html', require_login=True)
-    return render_template('main.html')
+    return render_template('main.html', username=current_user.username)
 
 @main_bp.route('/welcome')
 def welcome():
     if not current_user.is_authenticated:
         return redirect(url_for('auth.login'))
     return render_template('welcome.html', username=current_user.username)
-
-@main_bp.route('/home')
-def home():
-    if not current_user.is_authenticated:
-        return redirect(url_for('auth.login'))
-    return render_template('home.html')
