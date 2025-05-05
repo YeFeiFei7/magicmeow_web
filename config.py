@@ -6,10 +6,8 @@ class Config:
 
     # Database configuration
     DATABASE_URL = os.environ.get('DATABASE_URL')
-    if DATABASE_URL:
-        SQLALCHEMY_DATABASE_URI = DATABASE_URL.replace("postgres://", "postgresql://")
-    else:
-        raise ValueError("DATABASE_URL environment variable is not set. Please set it in Render's Environment settings.")
+    SQLALCHEMY_DATABASE_URI = DATABASE_URL  # ✅ 添加这一行
+
 
     # SQLAlchemy settings
     SQLALCHEMY_TRACK_MODIFICATIONS = False
