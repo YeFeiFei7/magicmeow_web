@@ -1,8 +1,12 @@
 import os
 
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL').replace("postgres://", "postgresql://")
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'default-secret-key')  # 提供默认值
+    DATABASE_URL = os.environ.get('DATABASE_URL')
+    if DATABASE_URL:
+        SQLALCHEMY_DATABASE_URI = DATABASE_URL.replace("postgres://", "postgresql://")
+    else:
+        raise ValueError("DATABASE_URL environment variable is not set")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
     GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
