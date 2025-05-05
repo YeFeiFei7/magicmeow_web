@@ -17,10 +17,13 @@ def create_app():
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
 
+    from app.routes import *
+
     from app.routes.auth import auth_bp
     from app.routes.main import main_bp
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(main_bp)
 
-
     return app
+
+
