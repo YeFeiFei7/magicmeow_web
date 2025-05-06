@@ -11,6 +11,11 @@ from dotenv import load_dotenv
 # Load environment variables from .env file (for local development)
 load_dotenv()
 
+# Debug: Print all environment variables to verify
+print("All environment variables:")
+for key, value in os.environ.items():
+    print(f"{key}: {value}")
+
 # Initialize Flask app
 app = Flask(__name__)
 
@@ -18,8 +23,10 @@ app = Flask(__name__)
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY')
     DATABASE_URL = os.environ.get('DATABASE_URL')
+    # Debug: If DATABASE_URL is not set, use a temporary fallback (for testing only)
     if not DATABASE_URL:
-        raise ValueError("DATABASE_URL environment variable is not set")
+        print("Warning: DATABASE_URL is not set. Using a temporary SQLite database for debugging.")
+        DATABASE_URL = "sqlite:///temporary.db"  # Temporary fallback for debugging
     SQLALCHEMY_DATABASE_URI = DATABASE_URL
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
