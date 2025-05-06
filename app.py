@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
+# Load environment variables from .env file (for local development)
 load_dotenv()
 
 # Initialize Flask app
@@ -17,16 +17,31 @@ app = Flask(__name__)
 # Load configuration
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY')
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    DATABASE_URL = os.environ.get('DATABASE_URL')
+    if not DATABASE_URL:
+        raise ValueError("DATABASE_URL environment variable is not set")
+    SQLALCHEMY_DATABASE_URI = DATABASE_URL
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID')
     GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET')
     GOOGLE_REDIRECT_URI = os.environ.get('PROD_BASE_URL') if os.environ.get('FLASK_ENV') == 'production' else os.environ.get('LOCAL_BASE_URL')
     FLASK_ENV = os.environ.get('FLASK_ENV', 'production')
 
+# Debug: Print configuration to verify
+print(f"SECRET_KEY: {Config.SECRET_KEY}")
+print(f"DATABASE_URL: {Config.DATABASE_URL}")
+print(f"SQLALCHEMY_DATABASE_URI: {Config.SQLALCHEMY_DATABASE_URI}")
+print(f"GOOGLE_CLIENT_ID: {Config.GOOGLE_CLIENT_ID}")
+print(f"GOOGLE_REDIRECT_URI: {Config.GOOGLE_REDIRECT_URI}")
+
+# Apply configuration to Flask app
 app.config.from_object(Config)
 
-# Initialize extensions
+# Verify SQLALCHEMY_DATABASE_URI is set in app.config
+if not app.config.get('SQLALCHEMY_DATABASE_URI'):
+    raise ValueError("SQLALCHEMY_DATABASE_URI is not set in app.config")
+
+# Initialize extensions after configuration
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
