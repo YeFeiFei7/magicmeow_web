@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Page</title>
+    <link rel="stylesheet" href="/static/css/viewWeekly.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Judson&display=swap" rel="stylesheet">
+    <style>
+        .plan-quadrant {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+        .plan-name {
+            flex: 1;
+        }
+        .completed .plan-name {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .complete-checkbox {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <div class="user-info">
+                    <a href="/profile">
+                        <img src="{{ user.avatar if user.avatar else url_for('static', filename='images/user.png') }}" alt="User" class="avatar">
+                    </a>
+                    <div class="user-text">
+                        <p class="sidebar-text user">{{ session['username'] }}</p>
+                        <p class="sidebar-text user" id="days">day</p>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="menu">
+                    <button class="menu-btn" onclick="window.location.href='/home'">
+                        <img src="/static/images/home.png" alt="Home">
+                        <span class="sidebar-text">Home</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/viewMonthly'">
+                        <img src="/static/images/view.png" alt="View">
+                        <span class="sidebar-text">View</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/focus'">
+                        <img src="/static/images/clock.png" alt="Focus Time">
+                        <span class="sidebar-text">Focus Time</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/statistics'">
+                        <img src="/static/images/statistics.png" alt="Data Statistic">
+                        <span class="sidebar-text">Data Statistic</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/setting'">
+                        <img src="/static/images/setting.png" alt="Setting">
+                        <span class="sidebar-text">Setting</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/aboutUs'">
+                        <img src="/static/images/aboutUs.png" alt="About Us">
+                        <span class="sidebar-text">About Us</span>
+                    </button>
+                    <button class="add-plan" onclick="window.location.href='/addPlan'">
+                        <img src="/static/images/addPlan.png" alt="Add Plan" class="plus-icon" style="width: 50px;">
+                        <span class="sidebar-text">Add Plan</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-controls">
+            <button class="toggle-btn"><img src="/static/images/sidebar.png" alt=""></button>
+        </div>
+        <main class="main-content">
+            <div class="tabs">
+                <div class="tab" id="monthly-tab" onclick="window.location.href='/viewMonthly'">
+                    <img src="/static/images/frame.png" alt="">
+                    <span>Monthly</span>
+                </div>
+                <div class="tab active" id="weekly-tab">
+                    <img src="/static/images/cat2.png" alt="" style="margin-top: 40px;">
+                    <span style="position: absolute; top: 40%;">Weekly</span>
+                </div>
+                <div class="tab" id="daily-tab" onclick="window.location.href='/viewDaily'">
+                    <img src="/static/images/frame.png" alt="">
+                    <span>Daily</span>
+                </div>
+                <div class="dashed-line"></div>
+            </div>
+            <div class="header-wrapped">
+                <header class="weekly-header">
+                    <div id="year" class="year"></div>
+                    <div class="month-week">
+                        <button id="prevWeek" class="arrow-btn">◀</button>
+                        <div class="month-title">
+                            <div id="month" class="month"></div>
+                            <div id="weekRange" class="week-range"></div>
+                        </div>
+                        <button id="nextWeek" class="arrow-btn">▶</button>
+                    </div>
+                    <img src="/static/images/cat3.png" alt="">
+                </header>
+                <div class="horizontal-line"></div>
+            </div>
+            <button class="addFolder" onclick="window.location.href='/viewMonthly/folder'">
+                <img src="/static/images/icon-folder.png" alt="">
+            </button>
+            <div class="week-grid">
+                <div class="day-box" data-day="1">
+                    <div class="day-title">MONDAY</div>
+                    <div class="plans"></div>
+                </div>
+                <div class="day-box" data-day="2">
+                    <div class="day-title">TUESDAY</div>
+                    <div class="plans"></div>
+                </div>
+                <div class="day-box" data-day="3">
+                    <div class="day-title">WEDNESDAY</div>
+                    <div class="plans"></div>
+                </div>
+                <div class="day-box" data-day="4">
+                    <div class="day-title">THURSDAY</div>
+                    <div class="plans"></div>
+                </div>
+                <div class="day-box" data-day="5">
+                    <div class="day-title">FRIDAY</div>
+                    <div class="plans"></div>
+                </div>
+                <div class="day-box" data-day="6">
+                    <div class="day-title">SATURDAY</div>
+                    <div class="plans"></div>
+                </div>
+                <div class="day-box" data-day="0">
+                    <div class="day-title">SUNDAY</div>
+                    <div class="plans"></div>
+                </div>
+                <div class="day-box goal-box">
+                    <div class="day-title">GOALS</div>
+                    <div class="goals"></div>
+                </div>
+            </div>
+
+            <div class="plan-details" id="planPopup">
+                <img class="back-arrow-plan" src="/static/images/arrow.png" alt="Back">
+                <h2 class="plan-name-plan">Plan Title</h2>
+
+                <div class="plan-body">
+                    <div class="left-column">
+                        <div class="folder-select-plan">
+                            <img src="/static/images/icon-folder.png" alt="" style="height: 50px; width:auto;">
+                            <div class="folder-name-plan">Folder Name</div>
+                        </div>
+
+                        <div class="date-plan">
+                            <img src="/static/images/icon-date.png" alt="icon">
+                            <div class="date-info">
+                                <div class="date-range">Date Range</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="background-color: #C9E2D0;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="time-plan">
+                            <img src="/static/images/icon-time.png" alt="icon">
+                            <div class="time-info">
+                                <div class="time-range">Time Range</div>
+                                <div class="time-progress-container">
+                                    <div class="progress-bar" style="width: 170px;">
+                                        <div class="progress-fill" style="background-color: #F4A099;"></div>
+                                    </div>
+                                    <div class="time-left-label">
+                                        <span class="time-icon"></span>
+                                        <span>Time Left</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="reminder-plan">
+                            <img src="/static/images/icon-reminder.png" alt="">
+                            <span>Reminder Notification</span>
+                            <label class="switch">
+                                <input type="checkbox" id="reminderToggle">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+
+                        <div class="repeat-plan">
+                            <img src="/static/images/icon-repeat.png" alt="">
+                            <span class="month-text">Repeat: </span>
+                            <span class="week-text"></span>
+                            <span class="days-text"></span>
+                        </div>
+                    </div>
+
+                    <div class="right-column">
+                        <div class="notes-plan">
+                            <label>Notes:</label>
+                            <textarea class="notes-text" readonly></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quadrants-plan">
+                    <div class="highlight-oval-plan"></div>
+                    <div class="quadrant-content-plan">
+                        <div class="quadrant-item-plan top-left-plan">
+                            <img src="/static/images/yellow 2.png" alt="Fish">
+                            <p>Without putting much effort into it</p>
+                        </div>
+                        <div class="quadrant-item-plan top-right-plan">
+                            <img src="/static/images/red 2.png" alt="Fish">
+                            <p>Not doing it will cause problems</p>
+                        </div>
+                        <div class="quadrant-item-plan bottom-left-plan">
+                            <img src="/static/images/green 2.png" alt="Fish">
+                            <p>Trivial matters and chores</p>
+                        </div>
+                        <div class="quadrant-item-plan bottom-right-plan">
+                            <img src="/static/images/blue 2.png" alt="Fish">
+                            <p>Periodic goals</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="buttons-wrapper">
+                    <div class="buttons-plan">
+                        <button class="edit-btn-plan">Edit</button>
+                        <button class="delete-btn-plan">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="message-box-wrapper">
+            <div class="logoMain">
+                <img src="/static/images/m.png" alt="">
+                <h1>agicMeow</h1>
+            </div>
+            <div class="extra">
+                <button class="extra-btn" id="bunny"><img src="/static/images/bunny.png" alt=""></button>
+                <button class="extra-btn" id="discover" onclick="window.location.href='/discover';"><img src="/static/images/discover.png" alt=""></button>
+            </div>
+
+            <div class="reminder-panel" id="reminderPanel">
+                <div class="section">
+                    <div class="section-title">Chat History</div>
+                    <button id="newChatBtn" style="font-family: 'Jua', sans-serif; font-size: 16px; padding: 8px; margin: 0 10px 10px; border: 2px solid black; border-radius: 10px; background: white; cursor: pointer;">Start New Chat</button>
+                    <div class="chat-history" id="chatHistory"></div>
+                </div>
+            </div>
+
+            <div class="message-container">
+                <div class="chat">
+                    <div class="message-box">
+                        <div class="chatbot">
+                            <div class="Block__Messages" id="Block__Messages"></div>
+                        </div>
+                        <div class="message-box-input">
+                            <input type="text" placeholder="..." class="Input" id="Input">
+                            <button class="send-btn" id="send-btn"><img src="/static/images/send.png" alt="Send" style="width: 60px;"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button><img src="/static/images/statistics.png" alt=""></button>
+                    <button><img src="/static/images/addPlan.png" alt=""></button>
+                    <button><img src="/static/images/goals.png" alt=""></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/viewWeekly.js"></script>
+</body>
+</html>

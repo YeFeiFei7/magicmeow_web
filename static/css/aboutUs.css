@@ -1,0 +1,397 @@
+body {
+    font-family: 'Jua', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+    background-color: white;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+.sidebar {
+    width: 90px;
+    background: white;
+    transition: width 0.3s ease;
+    overflow: hidden;
+    border-right: 2px solid black;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+}
+
+
+.divider {
+    width: 50px;
+    height: 2px;
+    background: rgba(0, 0, 0);
+    margin: 10px auto;
+    transition: width 0.3s ease;
+}
+
+.sidebar.open{
+    width: 400px;
+}
+.sidebar.open .divider {
+    width: 80%;
+    margin-left: 0px;
+}
+
+.sidebar-content {
+    width: 100%;
+    padding: 10px;
+    text-align: left;
+}
+
+.user-info {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    margin-left: 11px;
+}
+
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid black;
+    object-fit: cover;
+    transition: width 0.3s, height 0.3s;
+
+}
+
+.sidebar.open .avatar {
+    width: 100px;
+    height: 100px;
+}
+.user-text{
+    display: flex;
+    flex-direction: column;
+    padding-top: 25px;
+}
+
+.user{
+    margin: 0px;
+}
+
+#days{
+    color:#FBBC05;
+}
+.sidebar.open .user-info {
+    align-items: center;
+    margin-top: 4px;
+    width: 60px;
+}
+.sidebar.open .avatar{
+    width: 100px;
+}
+
+.sidebar-text {
+    display: none;
+}
+
+.sidebar.open .sidebar-text {
+    display: inline;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+}
+
+.menu-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 80%;
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    text-align: left;
+    margin-bottom: 5px;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    font-family: 'Jua', sans-serif;
+    font-weight: lighter;
+    font-size: 20px;
+}
+.add-plan{
+    display: flex;
+    margin-top: 60px;
+    border: none;
+    background: none;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+}
+.sidebar.open .add-plan{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    padding: 12px 20px;
+    background: black;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    font-family: 'Jua', sans-serif;
+    font-weight: lighter;
+
+}
+.menu-btn img {
+    width: 50px;
+}
+
+.sidebar-text {
+    display: none;
+}
+
+.sidebar.open .sidebar-text {
+    display: inline;
+}
+
+.sidebar-controls {
+    display: flex;
+    position: absolute;
+    align-items: flex-start;
+    left: 95px;
+    top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    transition: left 0.3s ease;
+    z-index: 200;
+}
+
+.sidebar.open ~ .sidebar-controls {
+    left: 400px;
+}
+
+.toggle-btn{
+    display: flex;
+    align-items: center;
+    font-family: 'Jua', sans-serif;
+
+    font-size: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+
+}
+
+.toggle-btn img{
+    width: 40px;
+}
+
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+}
+
+.menu-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 80%;
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    text-align: left;
+    margin-bottom: 5px;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    font-family: 'Jua', sans-serif;
+    font-weight: lighter;
+    font-size: 20px;
+}
+
+.add-plan {
+    display: flex;
+    margin-top: 60px;
+    border: none;
+    background: none;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar.open .add-plan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    padding: 12px 20px;
+    background: black;
+    color: white;
+    font-size: 20px;
+    font-weight: lighter;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    font-family: 'Jua', sans-serif;
+}
+
+.menu-btn img {
+    width: 50px;
+}
+
+.logoMain {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%); /* Center the logo horizontally */
+    z-index: 10; /* Ensure the logo stays above the content */
+}
+
+.logoMain img {
+    width: 100px;
+    height: 100px;
+    margin-right: -5px;
+    position: relative;
+    bottom: -15px;
+}
+
+.logoMain h1 {
+    align-items: flex-end;
+    font-size: 40px;
+    color: #CEB3FF;
+    margin-top: 50px;
+    font-family: 'Love Ya Like A Sister', cursive;
+}
+
+.logo-spacer {
+    height: 120px; /* Match the approximate height of the logo to reserve space */
+    width: 100%;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.about-box {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    border: 2px solid black;
+    width: 50vw;
+    text-align: left;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px; /* Increase margin-bottom to add more space at the bottom */
+    z-index: 1; /* Ensure the content stays below the logo */
+}
+
+.about-title {
+    font-size: 30px;
+    font-weight: bold;
+    color: #CEB3FF;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    font-weight: lighter;
+    text-align: center;
+}
+
+.about-section {
+    margin: 20px 0;
+}
+
+.about-section h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #CEB3FF;
+    margin-bottom: 10px;
+    font-weight: lighter;
+}
+
+.about-section p {
+    font-size: 18px;
+    color: black;
+    line-height: 1.5;
+}
+
+.features-list,
+.why-list,
+.team-list {
+    list-style: none;
+    padding: 0;
+}
+
+.features-list li,
+.why-list li,
+.team-list li {
+    font-size: 18px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.features-list img {
+    width: 30px;
+    height: 30px;
+}
+
+.team-list li {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+}
+
+.team-name {
+    display: inline-block;
+    white-space: normal; /* Allow wrapping */
+    line-height: 1.2; /* Adjust line height for better spacing */
+}
+
+.team-list .fun-fact {
+    font-size: 16px;
+    color: #FBBC05;
+    display: none;
+    margin-top: 5px;
+}
+
+.team-list li:hover .fun-fact {
+    display: block;
+}
+
+.about-section a {
+    color: #CEB3FF;
+    text-decoration: none;
+}
+
+.about-section a:hover {
+    text-decoration: underline;
+}

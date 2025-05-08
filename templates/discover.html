@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MagicMeow Discover Tutorial</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Comic Neue', cursive;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f3e5f5, #fce4ec);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            border: 2px dashed #ce93d8;
+        }
+
+        h1 {
+            color: #ab47bc;
+            text-align: center;
+            font-size: 2.5em;
+            animation: fadeIn 1s ease-in;
+            position: relative;
+        }
+
+        h1::before {
+            content: '✨';
+            position: absolute;
+            left: -40px;
+            top: 0;
+            animation: sparkle 2s infinite;
+        }
+
+        h1::after {
+            content: '✨';
+            position: absolute;
+            right: -40px;
+            top: 0;
+            animation: sparkle 2s infinite 0.5s;
+        }
+
+        h2 {
+            color: #f06292;
+            margin-top: 20px;
+            font-size: 1.8em;
+            border-bottom: 2px solid #f8bbd0;
+            padding-bottom: 5px;
+        }
+
+        p {
+            color: #6d4c41;
+            font-size: 1.1em;
+        }
+
+        ol {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 30px;
+            font-size: 1.1em;
+        }
+
+        li::before {
+            content: '🐾';
+            position: absolute;
+            left: 0;
+            color: #f06292;
+            font-size: 1.2em;
+        }
+
+        .cat-decor {
+            position: absolute;
+            opacity: 0.2;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .cat-decor.left {
+            top: 10%;
+            left: -50px;
+            width: 150px;
+            transform: rotate(-20deg);
+        }
+
+        .cat-decor.right {
+            bottom: 10%;
+            right: -50px;
+            width: 150px;
+            transform: rotate(20deg);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+    </style>
+</head>
+<body>
+    <img src="/static/images/cat.png" alt="Cat Decor Left" class="cat-decor left">
+    <img src="/static/images/cat.png" alt="Cat Decor Right" class="cat-decor right">
+
+    <div class="container">
+        <h1>MagicMeow Discover Tutorial</h1>
+        <p>Meow meow! 🐾 Welcome to MagicMeow’s Discover guide! I’m Meowgic, your magical kitty, here to show you how to explore a world of wonders with Discover! ✨</p>
+
+        <h2>What is Discover, Meow?</h2>
+        <p>Discover is like a magical treasure chest that shows you sparkly content based on what you love—like yummy treats, fun games, or shiny magic tricks! You don’t even need to search; it’s all waiting for you in the Google app on your phone! 🐱</p>
+
+        <h2>How to Use Discover, Purr!</h2>
+        <ol>
+            <li><strong>Open the Google App</strong>: Grab your phone (iPhone or Android) and open the Google app, meow!</li>
+            <li><strong>Find Discover</strong>: Look under the search bar on the "Home" tab—it’s your magical portal! On some Android phones, you can also swipe right from your home screen to see it, purr!</li>
+            <li><strong>Explore the Magic</strong>: Scroll through to find sparkly articles, videos, and more, all picked just for you! 🐾</li>
+            <li><strong>Make It Your Own</strong>: Tap the little toggle on a card to say "More" or "Less" to see what you love—or "Not Interested" to wave away things you don’t like, meow!</li>
+            <li><strong>Follow Your Favorites</strong>: Tap the "Following" tab to chase after topics or websites you adore! ✨</li>
+        </ol>
+
+        <h2>Meowgical Tips for More Fun</h2>
+        <p>- Turn on Web & App Activity in your Google Account settings to make Discover even more magical, meow!</p>
+        <p>- Add pretty pictures and videos to your website so your content shines in Discover feeds, purr!</p>
+        <p>- Make sure your website is mobile-friendly—Discover loves to play on phones, just like me! 🐱</p>
+    </div>
+</body>
+</html>

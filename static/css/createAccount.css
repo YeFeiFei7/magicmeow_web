@@ -17,7 +17,8 @@ body {
     align-items: center;
     justify-content: center;
 }
-.signup-box {
+
+.signup-box{
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -40,6 +41,7 @@ body {
     color: #CEB3FF;
     margin-bottom: 30px;
     margin-top: -80px;
+
 }
 .logo img {
     width: 100px;
@@ -56,19 +58,22 @@ body {
     border-radius: 10px;
     padding: 30px;
     text-align: center;
-}
-.form-box h1 {
+  }
+
+  .form-box h1 {
     color: #C7B7F5;
     margin-bottom: 10px;
     font-size: 35px;
     font-weight: lighter;
     margin-top: 0;
-}
-.form-box h2 {
+  }
+
+  .form-box h2 {
     font-size: 20px;
     margin-bottom: 20px;
-}
-.form-box input {
+  }
+
+  .form-box input {
     width: 80%;
     height: 35px;
     padding: 12px;
@@ -77,8 +82,9 @@ body {
     border-radius: 10px;
     font-size: 20px;
     font-family: 'Jua', sans-serif;
-}
-.tooltip {
+  }
+  /* men osy zherde popup zhazadym, */
+  .tooltip {
     display: none;
     position: absolute;
     left: 400px;
@@ -92,18 +98,21 @@ body {
     border: 2px solid #444;
     font-size: 10px;
     z-index: 10;
-}
-.tooltip ul {
+  }
+
+  .tooltip ul {
     padding-left: 3px;
-}
-.tooltip li {
+  }
+
+  .tooltip li {
     margin-bottom: 6px;
     text-align: start;
     list-style: none;
     position: relative;
     padding-left: 20px;
-}
-.tooltip li::before {
+  }
+
+  .tooltip li::before {
     content: '';
     position: absolute;
     left: 0;
@@ -112,8 +121,9 @@ body {
     height: 10px;
     background-color: #f88;
     border-radius: 50%;
-}
-.form-box button {
+  }
+
+ .form-box button {
     width: 87%;
     padding: 15px;
     background-color: #333;
@@ -125,78 +135,17 @@ body {
     cursor: pointer;
     font-family: 'Jua', sans-serif;
     font-size: 24px;
-}
+  }
+
+
 .separator {
     width: 2px;
     background-color: #4a2c2a;
     height: 90%;
     align-self: center;
 }
+
 .image-box img {
     width: 80%;
     max-width: 886px;
-}
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .container {
-        width: 100%;
-        height: 700px;
-    }
-    .logo {
-        font-size: 36px;
-    }
-    .logo img {
-        width: 90px;
-    }
-    .form-box input {
-        font-size: 18px;
-    }
-    .form-box button {
-        font-size: 22px;
-    }
-}
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-        height: auto;
-        width: 100%;
-        padding: 20px 0;
-    }
-    .signup-box, .image-box {
-        flex: 100%;
-        width: 100%;
-    }
-    .separator {
-        display: none;
-    }
-    .logo {
-        font-size: 32px;
-        margin-top: -60px;
-    }
-    .logo img {
-        width: 80px;
-    }
-    .form-box {
-        max-width: 300px;
-    }
-    .form-box input {
-        font-size: 16px;
-    }
-    .form-box button {
-        font-size: 20px;
-    }
-}
-@media (max-width: 480px) {
-    .logo {
-        font-size: 28px;
-    }
-    .logo img {
-        width: 70px;
-    }
-    .form-box input {
-        font-size: 14px;
-    }
-    .form-box button {
-        font-size: 18px;
-    }
 }

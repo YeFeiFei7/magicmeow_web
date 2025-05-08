@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/addPlan.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.11.7/dayjs.min.js"></script>
+    <title>Add Plan</title>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <div class="user-info">
+                    <a href="/profile">
+                        <img src="{{ user.avatar if user.avatar else url_for('static', filename='images/user.png') }}" alt="User" class="avatar">
+                    </a>
+                    <div class="user-text">
+                        <p class="sidebar-text user">{{ session['username'] }}</p>
+                        <p class="sidebar-text user" id="days">day</p>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="menu">
+                    <button class="menu-btn" onclick="window.location.href='/home';">
+                        <img src="{{ url_for('static', filename='images/home.png') }}" alt="Home">
+                        <span class="sidebar-text">Home</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/viewMonthly';">
+                        <img src="{{ url_for('static', filename='images/view.png') }}" alt="View">
+                        <span class="sidebar-text">View</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/focus';">
+                        <img src="{{ url_for('static', filename='images/clock.png') }}" alt="Focus Time">
+                        <span class="sidebar-text">Focus Time</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/statistics';">
+                        <img src="{{ url_for('static', filename='images/statistics.png') }}" alt="Data Statistic">
+                        <span class="sidebar-text">Data Statistic</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/setting';">
+                        <img src="{{ url_for('static', filename='images/setting.png') }}" alt="Setting">
+                        <span class="sidebar-text">Setting</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/aboutUs';">
+                        <img src="{{ url_for('static', filename='images/aboutUs.png') }}" alt="About Us">
+                        <span class="sidebar-text">About Us</span>
+                    </button>
+                    <button class="add-plan" onclick="window.location.href='/addPlan';">
+                        <img src="{{ url_for('static', filename='images/addPlan.png') }}" alt="Add Plan" class="plus-icon" style="width: 50px;">
+                        <span class="sidebar-text">Add Plan</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-controls">
+            <button class="toggle-btn"><img src="{{ url_for('static', filename='images/sidebar.png') }}" alt=""></button>
+        </div>
+
+        <main class="main-content">
+            <div class="popup-note">
+                <h3>Note</h3>
+                <p>This task won't <span class="highlight">repeat</span> anymore –<br>
+                   it's now scheduled only for the <br><span class="highlight">selected time period</span></p>
+            </div>
+
+            <h2>ADD PLAN</h2>
+            <hr class="dashed-line">
+            <section class="add-plan-section">
+                <div class="plan-container">
+                    <input type="text" placeholder="Plan name" class="plan-name" id="planName">
+
+                    <div class="folder-select">
+                        <button class="folder-button">
+                            <img src="{{ url_for('static', filename='images/icon-folder.png') }}" alt="">
+                            <p id="selectedFolder">Select folder</p>
+                            <img src="{{ url_for('static', filename='images/icon-arrowbtn.png') }}" alt="" id="toggle-btn"
+                                style="width: 36px; height: 36px; margin-left:auto;">
+                        </button>
+                        <img src="{{ url_for('static', filename='images/icon-folder-extra.png') }}" alt="" class="extra-icon" id="createFolder">
+                    </div>
+
+                    <div class="note">
+                        <label for="notes" style="font-size: 20px;">Notes:</label>
+                        <textarea id="notes" class="notes"></textarea>
+                    </div>
+
+                    <div class="details">
+                        <p>Detailed Configuration*</p>
+                        <div class="config-options">
+                            <div class="config-item" id="date-btn">
+                                <img src="{{ url_for('static', filename='images/icon-date.png') }}" alt="" class="icon">
+                                <span>Date</span>
+                            </div>
+                            <div class="config-item" id="time-btn">
+                                <img src="{{ url_for('static', filename='images/icon-time.png') }}" alt="" class="icon">
+                                <span>Time</span>
+                            </div>
+                            <div class="config-item" id="repeat-btn">
+                                <img src="{{ url_for('static', filename='images/icon-repeat.png') }}" alt="" class="icon">
+                                <span>Repeat</span>
+                            </div>
+                            <div class="config-item" id="reminder-btn">
+                                <img src="{{ url_for('static', filename='images/icon-reminder.png') }}" alt="" class="icon">
+                                <span>Reminder</span>
+                            </div>
+                            <div class="config-item" id="quadrants-btn">
+                                <img src="{{ url_for('static', filename='images/icon-quadrants.png') }}" alt="" class="icon">
+                                <span>Four Quadrants</span>
+                            </div>
+                        </div>
+                        <div class="save-btn">
+                            <button id="save-btn">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="illustration">
+                <img src="{{ url_for('static', filename='images/illustration.png') }}" alt="Illustration">
+            </div>
+
+            <div class="create-folder">
+                <div class="header-create">
+                    <h2>CREATE FOLDER</h2>
+                    <img src="{{ url_for('static', filename='images/arrow.png') }}" alt="" id="close-createFolder-btn"
+                        style="width: 40px; height:40px; position:absolute; top:-10px; right:14px; cursor: pointer;">
+                </div>
+                <div class="dashed-line-create"></div>
+                <div class="input-wrapper">
+                    <input type="text" placeholder="Folder name" id="newFolderName" />
+                </div>
+                <button class="create-btn" id="createFolderBtn">Create</button>
+            </div>
+
+            <div class="folder">
+                <h2 style="text-align: center;">FOLDER</h2>
+                <img src="{{ url_for('static', filename='images/arrow.png') }}" alt="" id="close-folder-btn"
+                    style="width: 40px; height:40px; position:absolute; top:10px; right:14px; cursor: pointer;">
+                <hr class="dashed-line">
+                <button class="folder-button selection" style="margin-bottom: 20px; width:530px;" data-folder="UI/UX">
+                    <img src="{{ url_for('static', filename='images/icon-folder.png') }}" alt="" style="width: 60px; height:60px;">
+                    <p>UI/UX</p>
+                </button>
+                <button class="folder-button selection" style="width:530px;" data-folder="Default">
+                    <img src="{{ url_for('static', filename='images/icon-folder.png') }}" alt="" style="width: 60px; height:60px;">
+                    <p style="text-align:left">Default</p>
+                </button>
+            </div>
+
+            <div class="quadrants">
+                <img src="{{ url_for('static', filename='images/arrow.png') }}" alt="" id="close-quadrants-btn"
+                    style="width: 40px; height:40px; display:flex; margin-top:-10px; cursor: pointer; position:absolute; right: 10px;">
+                <div class="highlight-oval"></div>
+                <div class="quadrant-content">
+                    <div class="quadrant-item top-left">
+                        <img src="{{ url_for('static', filename='images/yellow 2.png') }}" alt="Fish">
+                        <p>Without putting much effort into it</p>
+                    </div>
+                    <div class="quadrant-item top-right">
+                        <img src="{{ url_for('static', filename='images/red 2.png') }}" alt="Fish">
+                        <p>Not doing it will cause problems</p>
+                    </div>
+                    <div class="quadrant-item bottom-left">
+                        <img src="{{ url_for('static', filename='images/green 2.png') }}" alt="Fish">
+                        <p>Trivial matters and chores</p>
+                    </div>
+                    <div class="quadrant-item bottom-right">
+                        <img src="{{ url_for('static', filename='images/blue 2.png') }}" alt="Fish">
+                        <p>Periodic goals</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="time-picker-container">
+                <img src="{{ url_for('static', filename='images/arrow.png') }}" alt="" id="close-time-btn"
+                    style="width: 40px; height:40px; display:flex; margin-top:-10px; cursor: pointer; position:absolute; right: 10px;">
+                <img src="{{ url_for('static', filename='images/bun.png') }}" alt="" class="bunny-icon">
+                <div class="time-picker-block">
+                    <label for="start-time-scroll">Start time:</label>
+                    <div class="time-picker-column">
+                        <div class="time-picker-scroll" id="start-time-scroll"></div>
+                        <button class="plus-btn" id="plusBtn">+</button>
+                    </div>
+                </div>
+                <div class="time-picker-block">
+                    <label for="end-time-scroll">End time:</label>
+                    <div class="time-picker-column">
+                        <div class="time-picker-scroll" id="end-time-scroll"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- reminder -->
+            <div class="reminder">
+                <img src="{{ url_for('static', filename='images/arrow.png') }}" alt="" id="close-reminder-btn" class="back-arrow">
+                <div class="switch-container">
+                    <div class="label-container">
+                        <img src="{{ url_for('static', filename='images/icon-reminder.png') }}" alt="" class="icon">
+                        <label for="reminder">Reminder Notification</label>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="reminder">
+                        <span class="toggle-button"></span>
+                    </label>
+                </div>
+                <div class="switch-container" style="gap: 60px;">
+                    <div class="label-container">
+                        <img src="{{ url_for('static', filename='images/forced.png') }}" alt="F" class="icon">
+                        <label for="forced">Forced Reminder</label>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="forced">
+                        <span class="toggle-button"></span>
+                    </label>
+                </div>
+                <div class="reminder-hide">
+                    <p style="font-size: 18px; margin-bottom: 5px">Early reminder Time:</p>
+                    <div class="reminder-setting">
+                        <div class="reminder-wrapper">
+                            <div id="scroll-hours" class="scroll-select">
+                                <!-- 0 to 12 by 0.5 -->
+                                <div class="scroll-option">0</div>
+                                <div class="scroll-option">0.5</div>
+                                <div class="scroll-option">1</div>
+                                <div class="scroll-option">1.5</div>
+                                <div class="scroll-option">2</div>
+                                <div class="scroll-option">2.5</div>
+                                <div class="scroll-option">3</div>
+                                <div class="scroll-option">3.5</div>
+                                <div class="scroll-option">4</div>
+                                <div class="scroll-option">4.5</div>
+                                <div class="scroll-option">5</div>
+                                <div class="scroll-option">5.5</div>
+                                <div class="scroll-option">6</div>
+                                <div class="scroll-option">6.5</div>
+                                <div class="scroll-option">7</div>
+                                <div class="scroll-option">7.5</div>
+                                <div class="scroll-option">8</div>
+                                <div class="scroll-option">8.5</div>
+                                <div class="scroll-option">9</div>
+                                <div class="scroll-option">9.5</div>
+                                <div class="scroll-option">10</div>
+                                <div class="scroll-option">10.5</div>
+                                <div class="scroll-option">11</div>
+                                <div class="scroll-option">11.5</div>
+                                <div class="scroll-option">12</div>
+                            </div>
+                            <div id="scroll-minutes" class="scroll-select hidden">
+                                <!-- 0 to 60 by 5 -->
+                                <div class="scroll-option">0</div>
+                                <div class="scroll-option">5</div>
+                                <div class="scroll-option">10</div>
+                                <div class="scroll-option">15</div>
+                                <div class="scroll-option">20</div>
+                                <div class="scroll-option">25</div>
+                                <div class="scroll-option">30</div>
+                                <div class="scroll-option">35</div>
+                                <div class="scroll-option">40</div>
+                                <div class="scroll-option">45</div>
+                                <div class="scroll-option">50</div>
+                                <div class="scroll-option">55</div>
+                                <div class="scroll-option">60</div>
+                            </div>
+                            <div id="scroll-days" class="scroll-select hidden">
+                                <!-- 0 to 10 by 1 -->
+                                <div class="scroll-option">0</div>
+                                <div class="scroll-option">1</div>
+                                <div class="scroll-option">2</div>
+                                <div class="scroll-option">3</div>
+                                <div class="scroll-option">4</div>
+                                <div class="scroll-option">5</div>
+                                <div class="scroll-option">6</div>
+                                <div class="scroll-option">7</div>
+                                <div class="scroll-option">8</div>
+                                <div class="scroll-option">9</div>
+                                <div class="scroll-option">10</div>
+                            </div>
+                            <div class="option-buttons">
+                                <div class="option-button active" data-type="hours">Hours before</div>
+                                <div class="option-button" data-type="minutes">Minutes before</div>
+                                <div class="option-button" data-type="days">Days before</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calendar-container">
+                <div class="back-arrow" id="close-date-btn"
+                    style="width: 40px; height:40px; display:flex; margin-top:-10px; cursor: pointer; position:absolute; right: 10px;">
+                    <img src="{{ url_for('static', filename='images/arrow.png') }}" alt="">
+                </div>
+                <div class="header">
+                    <button onclick="changeMonth(-1)">◀</button>
+                    <span id="month-year"></span>
+                    <button onclick="changeMonth(1)">▶</button>
+                </div>
+                <table class="calendar-table">
+                    <thead>
+                        <tr>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                            <th>Sun</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calendar-body"></tbody>
+                </table>
+            </div>
+
+            <!-- repeat -->
+            <div class="repeat-container">
+                <div class="repeat-options">
+                    <div class="repeat-btn" data-type="day" id="repeat-day">
+                        <p>Day</p>
+                    </div>
+                    <div class="repeat-btn" data-type="week" id="repeat-week">
+                        <p>Week</p>
+                    </div>
+                    <div class="repeat-btn" data-type="month" id="repeat-month">
+                        <p>Month</p>
+                    </div>
+                </div>
+                <div class="day-part" id="day-part">
+                    <img src="{{ url_for('static', filename='images/cat3.png') }}" alt="Cat" class="day-cat">
+                    <div class="day-message">How many days do you want to continue this?</div>
+                    <div class="day-control">
+                        <img src="{{ url_for('static', filename='images/triangle.png') }}" alt="arrow" class="day-arrow">
+                        <input type="text" class="day-input" id="dayRepeatCount">
+                        <span class="day-label">DAY</span>
+                    </div>
+                </div>
+                <div class="week-part" id="week-part">
+                    <img src="{{ url_for('static', filename='images/cat3.png') }}" alt="Cat" class="week-cat">
+                    <div class="week-message">How many weeks do you want to continue this?</div>
+                    <div class="week-control">
+                        <img src="{{ url_for('static', filename='images/triangle.png') }}" alt="arrow" class="day-arrow">
+                        <input type="text" class="day-input" id="weekRepeatCount">
+                        <span class="day-label">WEEK</span>
+                    </div>
+                    <div class="week-buttons">
+                        <div class="week-circle" data-day="1">01</div>
+                        <div class="week-circle" data-day="2">02</div>
+                        <div class="week-circle" data-day="3">03</div>
+                        <div class="week-circle" data-day="4">04</div>
+                        <div class="week-circle" data-day="5">05</div>
+                        <div class="week-circle" data-day="6">06</div>
+                        <div class="week-circle" data-day="7">07</div>
+                    </div>
+                </div>
+                <div class="month-part" id="month-part">
+                    <img src="{{ url_for('static', filename='images/cat3.png') }}" alt="Cat" class="month-cat">
+                    <div class="month-message">Do you want to extend for a few more months (specific days)?</div>
+                    <div class="month-control">
+                        <img src="{{ url_for('static', filename='images/triangle.png') }}" alt="arrow" class="day-arrow">
+                        <input type="text" class="day-input" id="monthRepeatCount">
+                        <span class="day-label">MONTH</span>
+                    </div>
+                    <div class="custom-calendar">
+                        <div class="calendar-header">
+                            <button onclick="changeCustomMonth(-1)">◀</button>
+                            <span id="calendar-month-year"></span>
+                            <button onclick="changeCustomMonth(1)">▶</button>
+                        </div>
+                        <table class="calendar-table-plan">
+                            <thead>
+                                <tr>
+                                    <th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
+                                </tr>
+                            </thead>
+                            <tbody id="calendar-custom-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="repeat-actions">
+                    <button class="cancel-btn" id="close-reapeat-btn">Cancel</button>
+                    <button class="confirm-btn" id="confirmRepeatBtn">Confirm</button>
+                </div>
+            </div>
+
+            <div class="plan-details">
+                <img class="back-arrow-plan" src="{{ url_for('static', filename='images/arrow.png') }}" alt="" id="close-plan-btn">
+                <h2 class="status-text">Saved successfully!</h2>
+                <div class="plan-body">
+                    <div class="left-column">
+                        <div class="plan-name-plan">
+                            <img src="{{ url_for('static', filename='images/edit.png') }}" alt="">
+                            <span id="planNameDisplay"></span>
+                        </div>
+                        <div class="folder-select-plan">
+                            <img src="{{ url_for('static', filename='images/icon-folder.png') }}" alt="" style="height: 50px; width:auto;">
+                            <div class="folder-name-plan" id="folderNameDisplay"></div>
+                        </div>
+                        <div class="date-plan">
+                            <img src="{{ url_for('static', filename='images/icon-date.png') }}" alt="icon">
+                            <div class="date-info">
+                                <div class="date-range" id="dateRangeDisplay"></div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%; background-color: #C9E2D0;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="time-plan">
+                            <img src="{{ url_for('static', filename='images/icon-time.png') }}" alt="icon">
+                            <div class="time-info">
+                                <div class="time-range" id="timeRangeDisplay"></div>
+                                <div class="time-progress-container">
+                                    <div class="progress-bar" style="width: 170px;">
+                                        <div class="progress-fill" style="width: 65%; background-color: #F4A099;"></div>
+                                    </div>
+                                    <div class="time-left-label">
+                                        <span class="time-icon"></span>
+                                        <span id="timeLeftDisplay"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="reminder-plan">
+                            <img src="{{ url_for('static', filename='images/icon-reminder.png') }}" alt="">
+                            <span>Reminder Notification</span>
+                            <label class="switch">
+                                <input type="checkbox" id="reminderToggle">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="repeat-plan">
+                            <img src="{{ url_for('static', filename='images/icon-repeat.png') }}" alt="">
+                            <span class="month-text">Repeat: <span id="repeatDisplay"></span></span>
+                        </div>
+                    </div>
+                    <div class="right-column">
+                        <div class="notes-plan">
+                            <label>Notes:</label>
+                            <textarea class="notes-text" id="notesDisplay" readonly></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="quadrants-plan">
+                    <div class="highlight-oval-plan"></div>
+                    <div class="quadrant-content-plan">
+                        <div class="quadrant-item-plan top-left-plan">
+                            <img src="{{ url_for('static', filename='images/yellow 2.png') }}" alt="Fish">
+                            <p>Without putting much effort into it</p>
+                        </div>
+                        <div class="quadrant-item-plan top-right-plan">
+                            <img src="{{ url_for('static', filename='images/red 2.png') }}" alt="Fish">
+                            <p>Not doing it will cause problems</p>
+                        </div>
+                        <div class="quadrant-item-plan bottom-left-plan">
+                            <img src="{{ url_for('static', filename='images/green 2.png') }}" alt="Fish">
+                            <p>Trivial matters and chores</p>
+                        </div>
+                        <div class="quadrant-item-plan bottom-right-plan">
+                            <img src="{{ url_for('static', filename='images/blue 2.png') }}" alt="Fish">
+                            <p>Periodic goals</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="buttons-wrapper">
+                    <div class="buttons-plan">
+                        <button class="edit-btn-plan">Edit</button>
+                        <button class="delete-btn-plan">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="message-box-wrapper">
+            <div class="logoMain">
+                <img src="/static/images/m.png" alt="">
+                <h1>agicMeow</h1>
+            </div>
+            <div class="extra">
+                <button class="extra-btn" id="bunny"><img src="/static/images/bunny.png" alt=""></button>
+                <button class="extra-btn" id="discover" onclick="window.location.href='/discover';"><img src="/static/images/discover.png" alt=""></button>
+            </div>
+
+            <div class="reminder-panel" id="reminderPanel">
+                <div class="section">
+                    <div class="section-title">Chat History</div>
+                    <button id="newChatBtn" style="font-family: 'Jua', sans-serif; font-size: 16px; padding: 8px; margin: 0 10px 10px; border: 2px solid black; border-radius: 10px; background: white; cursor: pointer;">Start New Chat</button>
+                    <div class="chat-history" id="chatHistory"></div>
+                </div>
+            </div>
+
+            <div class="message-container">
+                <div class="chat">
+                    <div class="message-box">
+                        <div class="chatbot">
+                            <div class="Block__Messages" id="Block__Messages"></div>
+                        </div>
+                        <div class="message-box-input">
+                            <input type="text" placeholder="..." class="Input" id="Input">
+                            <button class="send-btn" id="send-btn"><img src="/static/images/send.png" alt="Send" style="width: 60px;"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button><img src="/static/images/statistics.png" alt=""></button>
+                    <button><img src="/static/images/addPlan.png" alt=""></button>
+                    <button><img src="/static/images/goals.png" alt=""></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/addPlan.js') }}"></script>
+</body>
+</html>

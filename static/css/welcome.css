@@ -9,6 +9,7 @@ body {
     justify-content: center;
     height: 100vh;
 }
+
 .logo {
     position: absolute;
     font-family: 'Love Ya Like A Sister', cursive;
@@ -17,6 +18,7 @@ body {
     top: 50px;
     left: 30px;
     margin-top: -80px;
+
 }
 .logo img {
     width: 100px;
@@ -25,71 +27,27 @@ body {
     position: relative;
     bottom: -30px;
 }
+
 .container {
     display: flex;
     text-align: center;
     align-items: center;
     gap: 10px;
 }
+
 .gif {
     width: 425px;
     height: auto;
     margin-bottom: 60px;
 }
+
 .welcome-text {
     font-size: 70px;
     color: #BCA7F2;
     text-shadow: 1px 1px 0 black;
 }
+
 .username {
     color: #BCA7F2;
     text-shadow: 1px 1px 0 black;
-}
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .logo {
-        font-size: 36px;
-    }
-    .logo img {
-        width: 90px;
-    }
-    .welcome-text {
-        font-size: 60px;
-    }
-    .gif {
-        width: 350px;
-    }
-}
-@media (max-width: 768px) {
-    .logo {
-        font-size: 32px;
-        top: 30px;
-        left: 20px;
-    }
-    .logo img {
-        width: 80px;
-    }
-    .welcome-text {
-        font-size: 50px;
-    }
-    .gif {
-        width: 300px;
-    }
-    .container {
-        flex-direction: column;
-    }
-}
-@media (max-width: 480px) {
-    .logo {
-        font-size: 28px;
-    }
-    .logo img {
-        width: 70px;
-    }
-    .welcome-text {
-        font-size: 40px;
-    }
-    .gif {
-        width: 250px;
-    }
 }

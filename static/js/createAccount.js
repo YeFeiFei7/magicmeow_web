@@ -16,16 +16,5 @@ document.getElementById('password').addEventListener('input', function() {
     tooltipContent += '</ul>';
 
     tooltip.innerHTML = tooltipContent;
-    tooltip.style.display = password ? 'block' : 'none';
-});
-
-document.querySelector('form').addEventListener('submit', function(event) {
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.querySelector('input[name="confirm_password"]').value;
-    const errorDiv = document.querySelector('.error');
-
-    if (password !== confirmPassword) {
-        event.preventDefault();
-        errorDiv.textContent = 'Passwords do not match.';
-    }
+    tooltip.style.display = 'block';
 });

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Personality Quiz - MagicMeow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Jua', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            background-color: white;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            background-image: linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .quiz-box {
+            background: white;
+            padding: 20px; /* Reduced padding to give more space */
+            border-radius: 20px;
+            border: 2px solid black;
+            width: 90%;
+            max-width: 600px;
+            text-align: left;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            box-sizing: border-box; /* Ensure padding/border included in width */
+        }
+
+        .quiz-title {
+            font-family: 'Love Ya Like A Sister', cursive;
+            font-size: 40px;
+            font-weight: lighter;
+            color: #CEB3FF;
+            margin-top: 0;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .quiz-text {
+            font-size: 20px;
+            font-weight: normal;
+            color: black;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .question h2 {
+            font-size: 24px;
+            font-weight: lighter;
+            color: black;
+            margin-bottom: 15px;
+        }
+
+        .option-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: calc(100% - 20px); /* Adjusted to prevent overflow */
+            height: 55px;
+            border: 2px solid black;
+            border-radius: 15px;
+            background: white;
+            font-size: 16px;
+            font-family: 'Jua', sans-serif;
+            cursor: pointer;
+            text-align: left;
+            padding: 0 10px; /* Reduced padding for better fit */
+            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, background-color 0.2s;
+            margin-bottom: 10px;
+            box-sizing: border-box; /* Ensure padding/border included in width */
+        }
+
+        .option-card:hover {
+            transform: scale(1.02);
+            background-color: #f0f0f0;
+        }
+
+        .option-card.selected {
+            background-color: #e5e7eb;
+            transform: scale(1.02);
+        }
+
+        .option-card img {
+            width: 25px;
+            height: 25px;
+        }
+
+        .option-card p {
+            margin: 0;
+            flex-grow: 1; /* Allow text to take available space */
+            white-space: nowrap; /* Prevent text wrapping */
+            overflow: hidden; /* Hide overflow text */
+            text-overflow: ellipsis; /* Show ellipsis for long text */
+        }
+
+        .result-container {
+            text-align: center;
+        }
+
+        .result-text, .ai-match-text {
+            font-size: 20px;
+            color: black;
+            margin-bottom: 15px;
+        }
+
+        .bunny-icon {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .bunny-icon img {
+            width: 150px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .quiz-btn {
+            width: 130px;
+            height: 55px;
+            border: 2px solid black;
+            border-radius: 15px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-family: 'Jua', sans-serif;
+            font-weight: lighter;
+            cursor: pointer;
+            text-align: center;
+            gap: 5px;
+            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s;
+        }
+
+        .quiz-btn:disabled {
+            background: #e5e7eb;
+            cursor: not-allowed;
+        }
+
+        .quiz-btn:hover:not(:disabled) {
+            background: #f0f0f0;
+        }
+
+        .skip-btn {
+            font-size: 16px;
+            color: #CEB3FF;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: 'Jua', sans-serif;
+            font-weight: lighter;
+            text-decoration: underline;
+        }
+
+        .skip-btn:hover {
+            color: #b89cff;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="quiz-box">
+            <div class="bunny-icon">
+                <img src="{{ url_for('static', filename='images/rrr.png') }}" alt="Bunny GIF">
+            </div>
+            <h1 class="quiz-title">Time Personality Quiz</h1>
+            <p class="quiz-text">Answer 5 quick questions to discover your time personality and meet your AI buddy, <span style="color: #CEB3FF;">Bunny~</span></p>
+
+            <div id="quiz-container">
+                <!-- Question 1 -->
+                <div id="question-1" class="question">
+                    <h2>1. What time management tool do you use most often?</h2>
+                    <div class="option-card" data-value="A" onclick="selectOption(1, 'A')">
+                        <img src="{{ url_for('static', filename='images/addPlan.png') }}" alt="Calendar">
+                        <p>A. Calendar, time blocks, or planners</p>
+                    </div>
+                    <div class="option-card" data-value="B" onclick="selectOption(1, 'B')">
+                        <img src="{{ url_for('static', filename='images/clock.png') }}" alt="To-Do List">
+                        <p>B. To-Do List or habit-tracking app</p>
+                    </div>
+                    <div class="option-card" data-value="C" onclick="selectOption(1, 'C')">
+                        <img src="{{ url_for('static', filename='images/features.png') }}" alt="Instinct">
+                        <p>C. Rarely use tools, I go by instinct</p>
+                    </div>
+                </div>
+                <!-- Question 2 -->
+                <div id="question-2" class="question hidden">
+                    <h2>2. How do you feel about procrastination?</h2>
+                    <div class="option-card" data-value="A" onclick="selectOption(2, 'A')">
+                        <img src="{{ url_for('static', filename='images/addPlan.png') }}" alt="Schedule">
+                        <p>A. I rarely procrastinate; tasks are done on schedule</p>
+                    </div>
+                    <div class="option-card" data-value="B" onclick="selectOption(2, 'B')">
+                        <img src="{{ url_for('static', filename='images/clock.png') }}" alt="Sometimes">
+                        <p>B. I procrastinate sometimes but always finish</p>
+                    </div>
+                    <div class="option-card" data-value="C" onclick="selectOption(2, 'C')">
+                        <img src="{{ url_for('static', filename='images/features.png') }}" alt="Pressure">
+                        <p>C. Procrastination is my norm; I work best under pressure</p>
+                    </div>
+                </div>
+                <!-- Question 3 -->
+                <div id="question-3" class="question hidden">
+                    <h2>3. How do you plan your day?</h2>
+                    <div class="option-card" data-value="A" onclick="selectOption(3, 'A')">
+                        <img src="{{ url_for('static', filename='images/addPlan.png') }}" alt="Schedule">
+                        <p>A. I have a clear schedule, even by the hour</p>
+                    </div>
+                    <div class="option-card" data-value="B" onclick="selectOption(3, 'B')">
+                        <img src="{{ url_for('static', filename='images/clock.png') }}" alt="Tasks">
+                        <p>B. I decide key tasks in the morning</p>
+                    </div>
+                    <div class="option-card" data-value="C" onclick="selectOption(3, 'C')">
+                        <img src="{{ url_for('static', filename='images/features.png') }}" alt="Mood">
+                        <p>C. I go with the flow, based on my mood</p>
+                    </div>
+                </div>
+                <!-- Question 4 -->
+                <div id="question-4" class="question hidden">
+                    <h2>4. Do you often feel like you don’t have enough time?</h2>
+                    <div class="option-card" data-value="A" onclick="selectOption(4, 'A')">
+                        <img src="{{ url_for('static', filename='images/addPlan.png') }}" alt="Planning">
+                        <p>A. Sometimes, but planning helps</p>
+                    </div>
+                    <div class="option-card" data-value="B" onclick="selectOption(4, 'B')">
+                        <img src="{{ url_for('static', filename='images/clock.png') }}" alt="Anxious">
+                        <p>B. Often, and it makes me anxious</p>
+                    </div>
+                    <div class="option-card" data-value="C" onclick="selectOption(4, 'C')">
+                        <img src="{{ url_for('static', filename='images/features.png') }}" alt="Fires">
+                        <p>C. Very often, I’m always putting out fires</p>
+                    </div>
+                </div>
+                <!-- Question 5 -->
+                <div id="question-5" class="question hidden">
+                    <h2>5. What work rhythm do you prefer?</h2>
+                    <div class="option-card" data-value="A" onclick="selectOption(5, 'A')">
+                        <img src="{{ url_for('static', filename='images/addPlan.png') }}" alt="Steady">
+                        <p>A. Steady and efficient, with daily output</p>
+                    </div>
+                    <div class="option-card" data-value="B" onclick="selectOption(5, 'B')">
+                        <img src="{{ url_for('static', filename='images/clock.png') }}" alt="Phased">
+                        <p>B. Phased progress, with bursts and breaks</p>
+                    </div>
+                    <div class="option-card" data-value="C" onclick="selectOption(5, 'C')">
+                        <img src="{{ url_for('static', filename='images/features.png') }}" alt="Inspired">
+                        <p>C. Driven by inspiration, thriving under pressure</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="result-container" class="result-container hidden">
+                <h2 class="quiz-title">Your Time Personality</h2>
+                <p id="result-text" class="result-text"></p>
+                <p id="ai-match-text" class="ai-match-text"></p>
+                <div class="button-container">
+                    <div></div>
+                    <button onclick="proceedToWelcome()" class="quiz-btn">
+                        <img src="{{ url_for('static', filename='images/send.png') }}" alt="Continue" style="width: 30px;">
+                        Continue
+                    </button>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button onclick="skipQuiz()" class="skip-btn">Skip Quiz</button>
+                <button id="next-button" onclick="nextQuestion()" class="quiz-btn" disabled>
+                    <img src="{{ url_for('static', filename='images/send.png') }}" alt="Next" style="width: 30px;">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        let answers = {};
+        const totalQuestions = 5;
+
+        function selectOption(questionNum, value) {
+            answers[questionNum] = value;
+            const options = document.querySelectorAll(`#question-${questionNum} .option-card`);
+            options.forEach(option => {
+                option.classList.remove('selected');
+                if (option.dataset.value === value) {
+                    option.classList.add('selected');
+                }
+            });
+            document.getElementById('next-button').disabled = false;
+        }
+
+        function nextQuestion() {
+            if (!answers[currentQuestion]) {
+                alert('Please select an option!');
+                return;
+            }
+            document.getElementById(`question-${currentQuestion}`).classList.add('hidden');
+            currentQuestion++;
+            if (currentQuestion <= totalQuestions) {
+                document.getElementById(`question-${currentQuestion}`).classList.remove('hidden');
+                document.getElementById('next-button').disabled = !answers[currentQuestion];
+                if (currentQuestion === totalQuestions) {
+                    document.getElementById('next-button').innerHTML = `
+                        <img src="{{ url_for('static', filename='images/send.png') }}" alt="Finish" style="width: 30px;">
+                        Finish
+                    `;
+                }
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const scores = { A: 0, B: 0, C: 0 };
+            Object.values(answers).forEach(answer => scores[answer]++);
+            let maxScore = Math.max(scores.A, scores.B, scores.C);
+            let personality, aiType, personalityDesc;
+
+            if (scores.A === maxScore) {
+                personality = 'Plan-oriented';
+                aiType = 'Time Manager';
+                personalityDesc = 'You love structure and schedules, keeping everything organized with plans and calendars.';
+            } else if (scores.B === maxScore) {
+                personality = 'Task-oriented';
+                aiType = 'Task Companion';
+                personalityDesc = 'You focus on tasks and enjoy checking them off, balancing flexibility with productivity.';
+            } else {
+                personality = 'Inspiration-oriented';
+                aiType = 'Inspiration Sparker';
+                personalityDesc = 'You thrive on creativity and work best when inspired, often under pressure.';
+            }
+
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('result-container').classList.remove('hidden');
+            document.getElementById('result-text').textContent = `You are ${personality}! ${personalityDesc}`;
+            document.getElementById('ai-match-text').textContent = `Bunny will be your ${aiType} AI, tailored to your style!`;
+            document.getElementById('next-button').classList.add('hidden');
+
+            // Save result to server
+            fetch('/api/save_quiz_result', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ time_personality: personality.toLowerCase() })
+            }).then(response => response.json()).then(data => {
+                if (!data.success) {
+                    console.error('Failed to save quiz result:', data.error);
+                }
+            }).catch(error => {
+                console.error('Error saving quiz result:', error);
+            });
+        }
+
+        function skipQuiz() {
+            // Set default personality (Task-oriented) and save
+            fetch('/api/save_quiz_result', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ time_personality: 'task-oriented' })
+            }).then(response => response.json()).then(data => {
+                if (data.success) {
+                    alert('We’ve set Bunny as your Task Companion AI. You can change this later!');
+                    window.location.href = '/welcome';
+                } else {
+                    console.error('Failed to save default personality:', data.error);
+                }
+            }).catch(error => {
+                console.error('Error saving default personality:', error);
+                alert('Something went wrong. Please try again.');
+            });
+        }
+
+        function proceedToWelcome() {
+            window.location.href = '/welcome';
+        }
+    </script>
+</body>
+</html>

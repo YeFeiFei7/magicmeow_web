@@ -1,0 +1,40 @@
+def edit_plan():
+    if 'user_id' not in session:
+        return jsonify({'error': 'Please login first'}), 401
+
+    data = request.json
+    plan_id = data.get('plan_id')
+    if not plan_id:
+        return jsonify({'error': 'Plan ID is required'}), 400
+
+    users = read_users()
+    user_id = session['user_id']
+    user = next((u for u in users if u['id'] == user_id), None)
+    if not user:
+        return jsonify({'error': 'User not found'}), 404
+
+    if 'plans' not in user:
+        return jsonify({'error': 'No plans found for this user'}), 404
+
+    for plan in user['plans']:
+        if plan['id'] == plan_id:
+            plan.update({
+                'plan_name': data.get('plan_name', plan['plan_name']),
+                'folder': data.get('folder', plan['folder']),
+                'notes': data.get('notes', plan['notes']),
+                'date_start': data.get('date_start', plan['date_start']),
+                'date_end': data.get('date_end', plan['date_end']),
+                'time_start': data.get('time_start', plan['time_start']),
+                'time_end': data.get('time_end', plan['time_end']),
+                'repeat': data.get('repeat', plan['repeat']),
+                'reminder': data.get('reminder', plan['reminder']),
+                'quadrant': data.get('quadrant', plan['quadrant']),
+                'completed': data.get('completed', plan.get('completed', False)),
+                'updated_at': datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+            })
+            break
+    else:
+        return jsonify({'error': 'Plan not found'}), 404
+
+    write_users(users)
+    return jsonify({'success': 'Plan updated successfully', 'plan': plan})

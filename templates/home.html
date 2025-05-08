@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MagicMeow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <div class="user-info">
+                    <img src="{{ user.avatar if user.avatar else url_for('static', filename='images/user.png') }}" alt="" class="avatar" onclick="window.location.href='/profile';">
+                    <div class="user-text">
+                        <p class="sidebar-text user">{{ session['username'] }}</p>
+                        <p class="sidebar-text user" id="days">day</p>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="menu">
+                    <button class="menu-btn" onclick="window.location.href='/home';">
+                        <img src="{{ url_for('static', filename='images/home.png') }}" alt="Home">
+                        <span class="sidebar-text">Home</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/viewMonthly';">
+                        <img src="{{ url_for('static', filename='images/view.png') }}" alt="View">
+                        <span class="sidebar-text">View</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/focus';">
+                        <img src="{{ url_for('static', filename='images/clock.png') }}" alt="Focus Time">
+                        <span class="sidebar-text">Focus Time</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/statistics';">
+                        <img src="{{ url_for('static', filename='images/statistics.png') }}" alt="Data Statistic">
+                        <span class="sidebar-text">Data Statistic</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/setting';">
+                        <img src="{{ url_for('static', filename='images/setting.png') }}" alt="Setting">
+                        <span class="sidebar-text">Setting</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/aboutUs';">
+                        <img src="{{ url_for('static', filename='images/aboutUs.png') }}" alt="About Us">
+                        <span class="sidebar-text">About Us</span>
+                    </button>
+                    <button class="add-plan" onclick="window.location.href='/addPlan';">
+                        <img src="{{ url_for('static', filename='images/addPlan.png') }}" alt="Add Plan" class="plus-icon" style="width: 50px;">
+                        <span class="sidebar-text">Add Plan</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-controls">
+            <button class="toggle-btn"><img src="{{ url_for('static', filename='images/sidebar.png') }}" alt=""></button>
+            <button class="toggle-btn" id="notification"><img src="{{ url_for('static', filename='images/forced.png') }}" style="height: 55px; width:auto;" alt=""></button>
+        </div>
+        <div class="notification-popup" id="notificationPopup">
+            <div class="title-not">Notification</div>
+            <div class="not-message">
+                <img src="{{ url_for('static', filename='images/red.png') }}" alt="">
+                <div class="not-text">The day after tomorrow at 11:00, you have a midterm.</div>
+            </div>
+        </div>
+        <div class="extra-btn">
+            <button id="bunny"><img src="{{ url_for('static', filename='images/bunny.png') }}" alt="">Bunny</button>
+            <button id="discover" onclick="window.location.href='/discover';"><img src="/static/images/discover.png" alt="">Discover</button>
+
+        </div>
+        <div class="reminder-panel" id="reminderPanel">
+            <div class="section">
+                <div class="section-title">Chat History</div>
+                <button id="newChatBtn" style="font-family: 'Jua', sans-serif; font-size: 16px; padding: 8px; margin: 0 10px 10px; border: 2px solid black; border-radius: 10px; background: white; cursor: pointer;">Start New Chat</button>
+                <div class="chat-history" id="chatHistory"></div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="logoMain">
+                <img src="{{ url_for('static', filename='images/m.png') }}" alt="">
+                <h1>agicMeow</h1>
+            </div>
+
+            <div class="chat-box">
+                <div class="iconBunny">
+                    <img src="{{ url_for('static', filename='images/rrr.png') }}" alt="Bunny GIF">
+                </div>
+                <h2 class="chat-title">Welcome!</h2>
+                <p class="chat-text">My name is <span class="bunny-name">Bunny~</span><br>How can I help you?</p>
+
+                <p class="chat-subtitle">Recommended</p>
+                <ul class="chat-options">
+                    <li><img src="{{ url_for('static', filename='images/addPlan.png') }}" alt="Create a plan"> Create a plan</li>
+                    <li><img src="{{ url_for('static', filename='images/clock.png') }}" alt="Focus Session"> Add a focus session</li>
+                    <li><img src="{{ url_for('static', filename='images/features.png') }}" alt="Help"> How to use <span class="magicmeow">MagicMeow's</span> features?</li>
+                </ul>
+            </div>
+            <div class="chatbot">
+                <div class="Block__Messages" id="Block__Messages"></div>
+            </div>
+
+            <div class="chat">
+                <div class="message-box">
+                    <input type="text" placeholder="..." class="Input" id="Input">
+                    <button class="send-btn" id="send-btn"><img src="{{ url_for('static', filename='images/send.png') }}" alt="Send" style="width: 60px;"></button>
+                </div>
+            </div>
+
+            <div class="threebtn">
+                <button><img src="{{ url_for('static', filename='images/statistics.png') }}" alt="">Data statistic</button>
+                <button><img src="{{ url_for('static', filename='images/addPlan.png') }}" alt="" style="width:35px; height:auto; margin-right: 5px;">Add plan</button>
+                <button><img src="{{ url_for('static', filename='images/goals.png') }}" alt="" style="margin-right:0px">Setting Goals</button>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/home.js') }}" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.classList.add(savedTheme);
+        });
+    </script>
+</body>
+</html>

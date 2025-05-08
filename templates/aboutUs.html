@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - MagicMeow</title>
+    <link rel="stylesheet" href="/static/css/aboutUs.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <div class="user-info">
+                    <a href="/profile">
+                        <img src="{{ user.avatar if user.avatar else '/static/images/user.png' }}" alt="User" class="avatar">
+                    </a>
+                    <div class="user-text">
+                        <p class="sidebar-text user">{{ session['username'] }}</p>
+                        <p class="sidebar-text user" id="days">day</p>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="menu">
+                    <button class="menu-btn" onclick="window.location.href='/home'">
+                        <img src="/static/images/home.png" alt="Home">
+                        <span class="sidebar-text">Home</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/viewMonthly'">
+                        <img src="/static/images/view.png" alt="View">
+                        <span class="sidebar-text">View</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/focus'">
+                        <img src="/static/images/clock.png" alt="Focus Time">
+                        <span class="sidebar-text">Focus Time</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/statistics'">
+                        <img src="/static/images/statistics.png" alt="Data Statistic">
+                        <span class="sidebar-text">Data Statistic</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/setting'">
+                        <img src="/static/images/setting.png" alt="Setting">
+                        <span class="sidebar-text">Setting</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/aboutUs'">
+                        <img src="/static/images/aboutUs.png" alt="About Us">
+                        <span class="sidebar-text">About Us</span>
+                    </button>
+                    <button class="add-plan" onclick="window.location.href='/addPlan'">
+                        <img src="/static/images/addPlan.png" alt="Add Plan" class="plus-icon" style="width: 50px;">
+                        <span class="sidebar-text">Add Plan</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-controls">
+            <button class="toggle-btn"><img src="/static/images/sidebar.png" alt=""></button>
+        </div>
+
+        <div class="main-content">
+            <div class="about-box">
+                <h2 class="about-title">About Us 🐾</h2>
+                <div class="divider"></div>
+
+                <section class="about-section">
+                    <h3>🐾 What is MagicMeow?</h3>
+                    <p>Meow meow! 🐱 MagicMeow is a time management tool that combines an AI assistant with a gamified experience, designed to help you plan tasks efficiently while keeping you motivated and having fun. Whether it’s daily studying, work scheduling, or long-term goal tracking, MagicMeow makes time management smarter, more intuitive, and super easy!</p>
+                </section>
+
+                <section class="about-section">
+                    <h3>🌟 Our Vision</h3>
+                    <p>In this fast-paced world, we believe time management shouldn’t just be a cold to-do list—it should be an interactive, motivating, and comforting process. MagicMeow aims to help users build better habits, achieve their goals, and feel a sense of accomplishment and joy along the way, with the help of AI and adorable virtual assistants. Purr-fect, right? 🐾</p>
+                </section>
+
+                <section class="about-section">
+                    <h3>🚀 Our Features</h3>
+                    <ul class="features-list">
+                        <li><img src="/static/images/bunny.png" alt="AI Assistant"> AI Task Assistant: Meow the Cat & Bunny the Rabbit are your smart buddies, helping you plan tasks.</li>
+                        <li><img src="/static/images/icon-quadrants.png" alt="Quadrant"> Quadrant Time Management: Prioritize tasks based on importance and urgency to boost efficiency.</li>
+                        <li><img src="/static/images/clock.png" alt="Focus Mode"> Focus Mode: Features like Pomodoro timers, white noise, and focus lock to help you work deeply.</li>
+                        <li><img src="/static/images/filledStar.png" alt="Gamification"> Gamified Motivation: Complete tasks to unlock badges, rewards, and interact with your AI buddies!</li>
+                        <li><img src="/static/images/icon-task.png" alt="Smart Plan"> Smart Schedule Adjustments: AI learns your habits and optimizes your daily plans.</li>
+                    </ul>
+                </section>
+
+                <section class="about-section">
+                    <h3>👩‍💻 Our Team</h3>
+                    <p>MagicMeow was created by a team of passionate folks who love AI, product design, and time management. We wanted to build a tool that boosts productivity while providing warm companionship, making time management both fun and efficient!</p>
+                    <ul class="team-list">
+                        <li><strong>Yelina Yertay</strong> – Backend Developer | Builds MagicMeow’s core systems to make the AI super smart!<br><span class="fun-fact">Fun Fact: Yelina loves coding with a cup of catnip tea! 🐱</span></li>
+                        <li><strong class="team-name">Saya<br>Kassymkhan</strong> – UI/UX Designer | Makes MagicMeow’s interface beautiful, intuitive, and oh-so-cute!<br><span class="fun-fact">Fun Fact: Saya sketches designs with her pet bunny on her lap! 🐰</span></li>
+                        <li><strong class="team-name">Saule<br>Kalykova</strong> – Frontend Developer | Ensures MagicMeow’s web interactions are smooth and seamless.<br><span class="fun-fact">Fun Fact: Saule’s favorite focus music is a purring cat playlist! 🐾</span></li>
+                    </ul>
+                </section>
+
+                <section class="about-section">
+                    <h3>💡 Why MagicMeow?</h3>
+                    <ul class="why-list">
+                        <li>🌈 <strong>Smart & Intuitive</strong>: AI assistants help you plan, making time management a breeze.</li>
+                        <li>🎮 <strong>Fun & Motivating</strong>: A gamified task system lets you earn rewards as you grow.</li>
+                        <li>🧘‍♂️ <strong>Personalized & Easy</strong>: Customize your task habits to make time management simple.</li>
+                    </ul>
+                </section>
+
+                <section class="about-section">
+                    <h3>📩 Contact Us</h3>
+                    <p>Drop us a meow! 🐾 We’d love to hear from you!</p>
+                    <p>📧 <strong>Email:</strong> <a href="mailto:support@magicmeow.com">support@magicmeow.com</a></p>
+                    <p>🌐 <strong>Website:</strong> <a href="http://www.magicmeow.com">www.magicmeow.com</a></p>
+                    <p>📢 <strong>Follow Us:</strong> <a href="#">Twitter</a> | <a href="#">Instagram</a> | <a href="#">LinkedIn</a></p>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/aboutUs.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - MagicMeow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/setting.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap" rel="stylesheet">
+    <style>
+        .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid black;
+            object-fit: cover;
+            transition: width 0.3s, height 0.3s;
+            margin-top: 5px;
+        }
+        body.dark .avatar,
+        body.dark-blue .avatar,
+        body.dark-purple .avatar {
+            border: 3px solid #E0E0E0;
+        }
+        body.dark-blue .avatar {
+            border: 3px solid #A0B0D0;
+        }
+        body.dark-purple .avatar {
+            border: 3px solid #B0A0D0;
+        }
+        .sidebar.open .avatar {
+            width: 100px;
+            height: 100px;
+        }
+        .sidebar-controls {
+            display: flex;
+            position: absolute;
+            align-items: flex-start;
+            left: 10vh;
+            top: calc(0.463vh + 0.260vw);
+            flex-direction: column;
+            gap: 0px;
+            transition: left 0.3s ease;
+        }
+        .sidebar.open ~ .sidebar-controls {
+            left: 400px;
+        }
+        .toggle-btn {
+            display: flex;
+            align-items: center;
+            font-family: 'Jua', sans-serif;
+            font-size: 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+        .toggle-btn img {
+            width: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <div class="user-info">
+                    <a href="/profile">
+                        <img src="{{ user.avatar if user.avatar else url_for('static', filename='images/user.png') }}" alt="User" class="avatar">
+                    </a>
+                    <div class="user-text">
+                        <p class="sidebar-text user">{{ session['username'] }}</p>
+                        <p class="sidebar-text user" id="days">day</p>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="menu">
+                    <button class="menu-btn" onclick="window.location.href='/home'">
+                        <img src="{{ url_for('static', filename='images/home.png') }}" alt="Home">
+                        <span class="sidebar-text">Home</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/viewMonthly'">
+                        <img src="{{ url_for('static', filename='images/view.png') }}" alt="View">
+                        <span class="sidebar-text">View</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/focus'">
+                        <img src="{{ url_for('static', filename='images/clock.png') }}" alt="Focus Time">
+                        <span class="sidebar-text">Focus Time</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/statistics'">
+                        <img src="{{ url_for('static', filename='images/statistics.png') }}" alt="Data Statistic">
+                        <span class="sidebar-text">Data Statistic</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/setting'">
+                        <img src="{{ url_for('static', filename='images/setting.png') }}" alt="Setting">
+                        <span class="sidebar-text">Setting</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/aboutUs'">
+                        <img src="{{ url_for('static', filename='images/aboutUs.png') }}" alt="About Us">
+                        <span class="sidebar-text">About Us</span>
+                    </button>
+                    <button class="add-plan" onclick="window.location.href='/addPlan'">
+                        <img src="{{ url_for('static', filename='images/addPlan.png') }}" alt="Add Plan" class="plus-icon" style="width: 50px;">
+                        <span class="sidebar-text">Add Plan</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-controls">
+            <button class="toggle-btn"><img src="{{ url_for('static', filename='images/sidebar.png') }}" alt="Toggle Sidebar"></button>
+        </div>
+
+        <div class="main-content">
+            <div class="setting-box">
+                <h2 class="setting-title">Settings ⚙️</h2>
+                <div class="divider"></div>
+
+                <section class="setting-section">
+                    <h3>Theme</h3>
+                    <div class="setting-option">
+                        <label for="theme-select">Choose a theme:</label>
+                        <select id="theme-select">
+                            <option value="light">Light Mode</option>
+                            <option value="dark">Dark Mode (Gray)</option>
+                            <option value="dark-blue">Dark Mode (Blue)</option>
+                            <option value="dark-purple">Dark Mode (Purple)</option>
+                        </select>
+                    </div>
+                </section>
+
+                <section class="setting-section">
+                    <h3>Notifications</h3>
+                    <div class="setting-option">
+                        <label for="notifications-toggle">Enable Notifications:</label>
+                        <input type="checkbox" id="notifications-toggle" checked>
+                    </div>
+                </section>
+
+                <section class="setting-section">
+                    <h3>Language</h3>
+                    <div class="setting-option">
+                        <label for="language-select">Select Language:</label>
+                        <select id="language-select">
+                            <option value="en">English</option>
+                            <option value="zh">Chinese (Coming Soon)</option>
+                        </select>
+                    </div>
+                </section>
+
+                <button class="save-btn" onclick="saveSettings()">Save Settings</button>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/setting.js') }}" defer></script>
+</body>
+</html>

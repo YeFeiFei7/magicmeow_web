@@ -1,0 +1,324 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "username": "test",
+            "password_hash": "scrypt:32768:8:1$Q0ANeVVg4bKtrm4U$0624e7caa68ce721c1679da9b233cb181dacbe7932a8e8f8121fc686d404d7ea084eeaed62d7dbb05d43c6b06bb4832ed0c96abf32c35f241d697f3a388f2642",
+            "email": "210103471@stu.sdu.edu.kz",
+            "folders": [
+                {
+                    "id": 1,
+                    "name": "default"
+                },
+                {
+                    "id": 2,
+                    "name": "new folder"
+                }
+            ],
+            "mood_records": [
+                {
+                    "date": "2025-05-08",
+                    "mood": 1
+                }
+            ],
+            "settings": {
+                "theme": "light",
+                "notifications": true,
+                "language": "en"
+            },
+            "focus_records": [
+                {
+                    "id": "aada0f96-2e90-42ef-94f7-3fcbc717995f",
+                    "duration": 1,
+                    "timestamp": "2025-05-07T22:11:53.896Z",
+                    "type": "focus"
+                },
+                {
+                    "id": "21c67ff0-cfe5-404f-b96d-23018f4565a7",
+                    "duration": 1,
+                    "timestamp": "2025-05-07T22:27:59.843Z",
+                    "type": "focus"
+                },
+                {
+                    "id": "69cae2c2-74cd-4820-8c5a-b2293af82aa8",
+                    "duration": 60,
+                    "timestamp": "2025-05-07T22:29:19.404Z",
+                    "type": "focus"
+                },
+                {
+                    "id": "b790e6eb-05f3-4b27-93ca-73012fb55aee",
+                    "duration": 1,
+                    "timestamp": "2025-05-07T22:57:34.523Z",
+                    "type": "focus"
+                },
+                {
+                    "id": "50626a38-9582-4ead-b697-f447d820ecee",
+                    "duration": 1,
+                    "timestamp": "2025-05-07T22:59:29.568Z",
+                    "type": "focus"
+                },
+                {
+                    "id": "6bd8e969-3006-47b3-8f31-bd83420e48e4",
+                    "duration": 60,
+                    "timestamp": "2025-05-07T23:04:51.673Z",
+                    "type": "focus"
+                },
+                {
+                    "id": "58bbb5ef-ba0a-46f3-a010-eb55a8b21ffa",
+                    "duration": 60,
+                    "timestamp": "2025-05-07T23:23:53.404Z",
+                    "type": "focus"
+                }
+            ],
+            "plans": [
+                {
+                    "id": "12a3139d-a710-4e23-b34b-45fe6ce0028d",
+                    "plan_name": "final",
+                    "folder": "default",
+                    "notes": "",
+                    "date_start": null,
+                    "date_end": null,
+                    "time_start": null,
+                    "time_end": null,
+                    "repeat": {
+                        "type": null,
+                        "count": 0,
+                        "days": null
+                    },
+                    "reminder": null,
+                    "quadrant": null,
+                    "completed": false,
+                    "created_at": "2025-05-08T07:41:28"
+                },
+                {
+                    "id": "a8601bc8-deff-41a3-8163-e7e15b20e4f6",
+                    "plan_name": "final",
+                    "folder": "new folder",
+                    "notes": "",
+                    "date_start": null,
+                    "date_end": null,
+                    "time_start": null,
+                    "time_end": null,
+                    "repeat": {
+                        "type": null,
+                        "count": 0,
+                        "days": null
+                    },
+                    "reminder": null,
+                    "quadrant": null,
+                    "completed": false,
+                    "created_at": "2025-05-08T08:00:59"
+                },
+                {
+                    "id": "b7600dfa-a7e2-4bd7-8b78-d435fa097696",
+                    "plan_name": "final",
+                    "folder": "default",
+                    "notes": "",
+                    "date_start": "2025-05-08",
+                    "date_end": null,
+                    "time_start": "15:30",
+                    "time_end": "16:30",
+                    "repeat": {
+                        "type": null,
+                        "count": 0,
+                        "days": null
+                    },
+                    "reminder": null,
+                    "quadrant": "top-right",
+                    "completed": true,
+                    "created_at": "2025-05-08T08:02:56"
+                },
+                {
+                    "id": "eddeec23-e523-4b0d-b0ce-fcd686015607",
+                    "plan_name": "mid",
+                    "folder": "default",
+                    "notes": "",
+                    "date_start": "2025-05-08",
+                    "date_end": null,
+                    "time_start": null,
+                    "time_end": null,
+                    "repeat": {
+                        "type": null,
+                        "count": 0,
+                        "days": null
+                    },
+                    "reminder": null,
+                    "quadrant": null,
+                    "completed": false,
+                    "created_at": "2025-05-08T09:01:03"
+                },
+                {
+                    "id": "ed656c33-563e-477e-9323-b77f719ec774",
+                    "plan_name": "test",
+                    "folder": "default",
+                    "notes": "",
+                    "date_start": "2025-05-09",
+                    "date_end": null,
+                    "time_start": null,
+                    "time_end": null,
+                    "repeat": {
+                        "type": null,
+                        "count": 0,
+                        "days": null
+                    },
+                    "reminder": null,
+                    "quadrant": "top-right",
+                    "completed": false,
+                    "created_at": "2025-05-08T09:42:01"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "username": "test1",
+            "password_hash": "scrypt:32768:8:1$TTkCaC3KnzAs24dK$62666a187d8defdac1bf633fd5e34600b25adfc88349e70267fd95b7a1d80631540f2195b9de2e42ae924fb64c8d5d9e5ad0d290f4df38b4784cbcaa31f8d8cf",
+            "email": "yelina.yertay@gmail.com",
+            "avatar": "/static/uploads/IMG_20230521_184841_791.jpg",
+            "settings": {
+                "theme": "light",
+                "notifications": true,
+                "language": "en"
+            },
+            "folders": [
+                "UI/UX",
+                "Default",
+                "folder-test",
+                "diploma"
+            ],
+            "plans": [
+                {
+                    "id": "904a3302-f5a4-445e-867b-1e543db22fe2",
+                    "plan_name": "2",
+                    "folder": "UI/UX",
+                    "notes": "",
+                    "date_start": null,
+                    "date_end": null,
+                    "time_start": null,
+                    "time_end": null,
+                    "repeat": {
+                        "type": null,
+                        "count": 0,
+                        "days": null
+                    },
+                    "reminder": null,
+                    "quadrant": null,
+                    "created_at": "2025-05-02T00:18:32"
+                },
+                {
+                    "id": "963f3d1f-651d-4bc5-b2a7-1af313c751e5",
+                    "plan_name": "final",
+                    "folder": "UI/UX",
+                    "notes": "",
+                    "date_start": "2025-05-03",
+                    "date_end": null,
+                    "time_start": null,
+                    "time_end": null,
+                    "repeat": {
+                        "type": null,
+                        "count": 0,
+                        "days": null
+                    },
+                    "reminder": null,
+                    "quadrant": "top-right",
+                    "created_at": "2025-05-02T01:12:33"
+                },
+                {
+                    "id": "bf06dc36-b369-4beb-9f46-e5bf6ea4ecd8",
+                    "plan_name": "project",
+                    "folder": "UI/UX",
+                    "notes": "",
+                    "date_start": "2025-05-02",
+                    "date_end": "2025-05-03",
+                    "time_start": null,
+                    "time_end": "23:30",
+                    "repeat": null,
+                    "reminder": null,
+                    "quadrant": "top-right",
+                    "created_at": "2025-05-02T01:36:23"
+                },
+                {
+                    "id": "ff818f40-b56a-4a01-8431-6ac3e7ebdeff",
+                    "plan_name": "hw",
+                    "folder": "UI/UX",
+                    "notes": "",
+                    "date_start": "2025-05-04",
+                    "date_end": null,
+                    "time_start": "00:00",
+                    "time_end": "00:30",
+                    "repeat": {
+                        "type": null,
+                        "count": 0,
+                        "days": null
+                    },
+                    "reminder": null,
+                    "quadrant": "top-right",
+                    "created_at": "2025-05-02T01:37:27"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "username": "nana",
+            "password_hash": "scrypt:32768:8:1$Vv4Hxo6M8uSjveDt$455e095d1a16e3f3d10e01fc8ff9591c310882f75d08f1f1abfdb9b21330292136757cf20469d7e1aabc7338cbecbd04fe8a6abd940326dcb1c78de2a6f11940",
+            "email": "elina.3993744@gmail.com",
+            "avatar": null,
+            "settings": {
+                "theme": "light",
+                "notifications": true,
+                "language": "en",
+                "time_personality": "plan-oriented"
+            },
+            "focus_records": [
+                {
+                    "id": "b0e1a42a-1e9c-4970-ae72-89eadfc4e9a5",
+                    "duration": 60,
+                    "timestamp": "2025-05-07T22:53:48.320Z",
+                    "type": "focus"
+                }
+            ],
+            "mood_records": [
+                {
+                    "date": "2025-05-08",
+                    "mood": 1
+                }
+            ],
+            "plans": [],
+            "folders": [
+                {
+                    "id": 1,
+                    "name": "UI/UX"
+                },
+                {
+                    "id": 2,
+                    "name": "Default"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "username": "efei",
+            "password_hash": "scrypt:32768:8:1$IXmswLxOeSRcibby$eb4c7bfc96160d0839920d08fe9a763df18c69fc1ef73a4e62f9692c9025eb40c89d4b1877297d27e6a9596aa5dd9be7034dccfef6bc32520d300a518bfb9a00",
+            "email": "efei@magicmeow.com",
+            "avatar": null,
+            "settings": {
+                "theme": "light",
+                "notifications": true,
+                "language": "en",
+                "time_personality": "plan-oriented"
+            },
+            "focus_records": [],
+            "mood_records": [],
+            "plans": [],
+            "folders": [
+                {
+                    "id": 1,
+                    "name": "UI/UX"
+                },
+                {
+                    "id": 2,
+                    "name": "Default"
+                }
+            ]
+        }
+    ]
+}

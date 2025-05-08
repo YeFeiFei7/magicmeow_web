@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folder</title>
+    <link rel="stylesheet" href="/static/css/folder.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Judson&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <div class="user-info">
+                    <img src="/static/images/user.png" alt="User" class="avatar">
+                    <div class="user-text">
+                        <p class="sidebar-text user">USER_1</p>
+                        <p class="sidebar-text user" id="days">day</p>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="menu">
+                    <button class="menu-btn" onclick="window.location.href='/home'">
+                        <img src="/static/images/home.png" alt="Home">
+                        <span class="sidebar-text">Home</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/viewMonthly'">
+                        <img src="/static/images/view.png" alt="View">
+                        <span class="sidebar-text">View</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/focus'">
+                        <img src="/static/images/clock.png" alt="Focus Time">
+                        <span class="sidebar-text">Focus Time</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/statistics'">
+                        <img src="/static/images/statistics.png" alt="Data Statistic">
+                        <span class="sidebar-text">Data Statistic</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/setting'">
+                        <img src="/static/images/setting.png" alt="Setting">
+                        <span class="sidebar-text">Setting</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/aboutUs'">
+                        <img src="/static/images/aboutUs.png" alt="About Us">
+                        <span class="sidebar-text">About Us</span>
+                    </button>
+                    <button class="add-plan" onclick="window.location.href='/addPlan'">
+                        <img src="/static/images/addPlan.png" alt="Add Plan" class="plus-icon" style="width: 50px;">
+                        <span class="sidebar-text">Add Plan</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-controls">
+            <button class="toggle-btn"><img src="/static/images/sidebar.png" alt=""></button>
+        </div>
+
+        <main class="main-content">
+            <header class="folder-header">
+                <h1>FOLDER</h1>
+                <img src="/static/images/icon-folder-extra.png" alt="" class="folder" id="addFolder">
+                <img src="/static/images/arrow.png" alt="" class="folder" id="back-page" onclick="window.location.href='/viewMonthly'">
+            </header>
+            <div class="folder-illustration" id="illustration">
+                <img src="/static/images/bgFolder.png" alt="" class="main-illustration">
+                <p class="empty-message">You haven't added any folders yet.</p>
+            </div>
+
+            <div class="folder-box-wrapper" id="folder-box"></div>
+
+            <div class="create-folder-panel" id="createPanel">
+                <div class="panel-header">
+                    <span>CREATE FOLDER</span>
+                    <button class="back-btn" id="backBtnCreate">
+                        <img src="/static/images/arrow.png" alt="">
+                    </button>
+                </div>
+                <hr class="dotted-divider">
+                <form class="create-form">
+                    <input type="text" placeholder="Folder name" id="folderNameInput">
+                    <button type="button" id="createBtn">Create</button>
+                </form>
+            </div>
+
+            <div class="edit-folder-panel" id="editPanel">
+                <div class="edit-panel-header">
+                    <span>EDIT FOLDER</span>
+                    <button class="back-btn" id="backBtnEdit">
+                        <img src="/static/images/arrow.png" alt="">
+                    </button>
+                </div>
+                <hr class="dotted-divider">
+                <form class="edit-form">
+                    <input type="text" placeholder="Folder name" id="folderNameInputEdit">
+                    <div class="edit-buttons">
+                        <button type="button" id="renameBtn">Rename</button>
+                        <button type="button" id="deleteBtn">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <div class="message-box-wrapper">
+            <div class="logoMain">
+                <img src="/static/images/m.png" alt="">
+                <h1>agicMeow</h1>
+            </div>
+            <div class="extra">
+                <button class="extra-btn" id="bunny"><img src="/static/images/bunny.png" alt=""></button>
+                <button class="extra-btn" id="discover" onclick="window.location.href='/discover';"><img src="/static/images/discover.png" alt=""></button>
+            </div>
+
+            <div class="reminder-panel" id="reminderPanel">
+                <div class="section">
+                    <div class="section-title">Chat History</div>
+                    <button id="newChatBtn" style="font-family: 'Jua', sans-serif; font-size: 16px; padding: 8px; margin: 0 10px 10px; border: 2px solid black; border-radius: 10px; background: white; cursor: pointer;">Start New Chat</button>
+                    <div class="chat-history" id="chatHistory"></div>
+                </div>
+            </div>
+
+            <div class="message-container">
+                <div class="chat">
+                    <div class="message-box">
+                        <div class="chatbot">
+                            <div class="Block__Messages" id="Block__Messages"></div>
+                        </div>
+                        <div class="message-box-input">
+                            <input type="text" placeholder="..." class="Input" id="Input">
+                            <button class="send-btn" id="send-btn"><img src="/static/images/send.png" alt="Send" style="width: 60px;"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button><img src="/static/images/statistics.png" alt=""></button>
+                    <button><img src="/static/images/addPlan.png" alt=""></button>
+                    <button><img src="/static/images/goals.png" alt=""></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/folder.js"></script>
+</body>
+</html>

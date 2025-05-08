@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Statistic</title>
+    <link rel="stylesheet" href="/static/css/statistics.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Judson&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <div class="user-info">
+                    <a href="/profile">
+                        <img src="{{ user.avatar if user.avatar else url_for('static', filename='images/user.png') }}" alt="User" class="avatar">
+                    </a>
+                    <div class="user-text">
+                        <p class="sidebar-text user">{{ session['username'] }}</p>
+                        <p class="sidebar-text user" id="days">day</p>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="menu">
+                    <button class="menu-btn" onclick="window.location.href='/home'">
+                        <img src="/static/images/home.png" alt="Home">
+                        <span class="sidebar-text">Home</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/viewMonthly'">
+                        <img src="/static/images/view.png" alt="View">
+                        <span class="sidebar-text">View</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/focus'">
+                        <img src="/static/images/clock.png" alt="Focus Time">
+                        <span class="sidebar-text">Focus Time</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/statistics'">
+                        <img src="/static/images/statistics.png" alt="Data Statistic">
+                        <span class="sidebar-text">Data Statistic</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/setting'">
+                        <img src="/static/images/setting.png" alt="Setting">
+                        <span class="sidebar-text">Setting</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/aboutUs'">
+                        <img src="/static/images/aboutUs.png" alt="About Us">
+                        <span class="sidebar-text">About Us</span>
+                    </button>
+                    <button class="add-plan" onclick="window.location.href='/addPlan'">
+                        <img src="/static/images/addPlan.png" alt="Add Plan" class="plus-icon" style="width: 50px;">
+                        <span class="sidebar-text">Add Plan</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-controls">
+            <button class="toggle-btn"><img src="/static/images/sidebar.png" alt=""></button>
+        </div>
+
+        <main class="main-content">
+            <header class="data-header">
+                <h1>DATA STATISTIC</h1>
+            </header>
+            <hr class="dotted-divider"></hr>
+
+            <div class="tabs-switcher">
+                <button class="tab-button" data-tab="daily-content">Daily</button>
+                <button class="tab-button" data-tab="monthly-content">Monthly</button>
+                <button class="tab-button" data-tab="all-content">All</button>
+            </div>
+
+            <div id="daily-content" class="daily-content">
+                <!-- Plan Progress -->
+                <div class="plan-progress">
+                    <h2>DAILY PLAN COMPLETION PROGRESS:</h2>
+                    <div class="container-prog">
+                        <div class="left-panel">
+                            <div class="task">
+                                <div class="icon"><img src="/static/images/red 2.png" alt=""></div>
+                                <div class="progress-bar">
+                                    <div class="progress-bar-fill" style="width: 60%; background: #F4A099"></div>
+                                </div>
+                                <div class="badge" style="background: #F4A099">3/5</div>
+                            </div>
+                            <div class="task">
+                                <div class="icon"><img src="/static/images/blue 2.png" alt=""></div>
+                                <div class="progress-bar" style="background: #A3C1F3">
+                                    <div class="progress-bar-fill" style="width: 100%; background: #A3C1F3"></div>
+                                </div>
+                                <div class="badge" style="background: #A3C1F3">2/2</div>
+                            </div>
+                            <div class="task">
+                                <div class="icon"><img src="/static/images/yellow 2.png" alt=""></div>
+                                <div class="progress-bar" style="background: #FDE9A8">
+                                    <div class="progress-bar-fill" style="width: 100%; background: #FDE9A8"></div>
+                                </div>
+                                <div class="badge" style="background: #FDE9A8">2/2</div>
+                            </div>
+                            <div class="task">
+                                <div class="icon"><img src="/static/images/green 2.png" alt=""></div>
+                                <div class="progress-bar" style="background: #C9E2D0">
+                                    <div class="progress-bar-fill" style="width: 100%; background: #C9E2D0"></div>
+                                </div>
+                                <div class="badge" style="background: #C9E2D0">1/1</div>
+                            </div>
+                        </div>
+                        <div class="right-panel">
+                            <canvas id="chartCanvas-daily" width="200" height="200"></canvas>
+                            <div class="toggle-switch" id="chartToggle-daily"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Focus -->
+                <div class="focus-section">
+                    <div class="focus-text"><h2>DAILY FOCUS RECORD:</h2></div>
+                    <div class="focus-record">
+                        <div class="focus-container">
+                            <div class="focus-left">
+                                <div class="focus-box">
+                                    <p>You completed <span class="big-num" id="daily-minutes">0</span></p>
+                                    <p><span class="highlight">MIN</span> of focus today</p>
+                                </div>
+                                <div class="focus-box">
+                                    <p>You completed <span class="big-num" id="daily-sessions">0</span></p>
+                                    <p><span class="highlight">FOCUS SESSION</span> today</p>
+                                </div>
+                            </div>
+                            <div class="focus-chart">
+                                <div class="chart">
+                                    <div class="chart-label">MIN</div>
+                                    <div class="chart-grid">
+                                        <div class="y-axis" id="yAxisMarks-daily"></div>
+                                        <div class="chart-content" id="barContainer-daily"></div>
+                                        <div class="x-axis"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mood -->
+                <div class="mood-section-daily">
+                    <div class="mood-text"><h2>DAILY MOOD CHECK:</h2></div>
+                    <div class="mood-chart-daily">
+                        <div class="chart-area-daily">
+                            <div class="bars-daily">
+                                <div class="bar-daily" data-id="1">
+                                    <img src="/static/images/star.png" alt="gray star" class="star">
+                                    <div class="bar-shape-daily">
+                                        <img src="/static/images/emotion1.png" alt="mood icon" class="icon">
+                                    </div>
+                                </div>
+                                <div class="bar-daily" data-id="2">
+                                    <img src="/static/images/star.png" alt="gray star" class="star">
+                                    <div class="bar-shape-daily">
+                                        <img src="/static/images/emotion2.png" alt="mood icon" class="icon">
+                                    </div>
+                                </div>
+                                <div class="bar-daily" data-id="3">
+                                    <img src="/static/images/star.png" alt="gray star" class="star">
+                                    <div class="bar-shape-daily">
+                                        <img src="/static/images/emotion3.png" alt="mood icon" class="icon">
+                                    </div>
+                                </div>
+                                <div class="bar-daily" data-id="4">
+                                    <img src="/static/images/star.png" alt="gray star" class="star">
+                                    <div class="bar-shape-daily">
+                                        <img src="/static/images/emotion4.png" alt="mood icon" class="icon">
+                                    </div>
+                                </div>
+                                <div class="bar-daily" data-id="5">
+                                    <img src="/static/images/star.png" alt="gray star" class="star">
+                                    <div class="bar-shape-daily">
+                                        <img src="/static/images/emotion5.png" alt="mood icon" class="icon">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="monthly-content" class="monthly-content">
+                <!-- Plan Progress -->
+                <div class="plan-progress">
+                    <h2 id="progressTitle"></h2>
+                    <div class="container-prog">
+                        <div class="left-panel">
+                            <div class="task">
+                                <div class="icon"><img src="/static/images/red 2.png" alt=""></div>
+                                <div class="progress-bar">
+                                    <div class="progress-bar-fill" style="width: 60%; background: #F4A099"></div>
+                                </div>
+                                <div class="badge" style="background: #F4A099">3/5</div>
+                            </div>
+                            <div class="task">
+                                <div class="icon"><img src="/static/images/blue 2.png" alt=""></div>
+                                <div class="progress-bar" style="background: #A3C1F3">
+                                    <div class="progress-bar-fill" style="width: 100%; background: #A3C1F3"></div>
+                                </div>
+                                <div class="badge" style="background: #A3C1F3">2/2</div>
+                            </div>
+                            <div class="task">
+                                <div class="icon"><img src="/static/images/yellow 2.png" alt=""></div>
+                                <div class="progress-bar" style="background: #FDE9A8">
+                                    <div class="progress-bar-fill" style="width: 100%; background: #FDE9A8"></div>
+                                </div>
+                                <div class="badge" style="background: #FDE9A8">2/2</div>
+                            </div>
+                            <div class="task">
+                                <div class="icon"><img src="/static/images/green 2.png" alt=""></div>
+                                <div class="progress-bar" style="background: #C9E2D0">
+                                    <div class="progress-bar-fill" style="width: 100%; background: #C9E2D0"></div>
+                                </div>
+                                <div class="badge" style="background: #C9E2D0">1/1</div>
+                            </div>
+                        </div>
+                        <div class="right-panel">
+                            <canvas id="chartCanvas" width="200" height="200"></canvas>
+                            <div class="toggle-switch" id="chartToggle"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Focus -->
+                <div class="focus-section">
+                    <div class="focus-text"><h2>MONTHLY FOCUS RECORD:</h2></div>
+                    <div class="focus-record">
+                        <div class="focus-container">
+                            <div class="focus-left">
+                                <div class="focus-box">
+                                    <p>You completed <span class="big-num" id="monthly-minutes">0</span></p>
+                                    <p><span class="highlight">MIN</span> of focus this month</p>
+                                </div>
+                                <div class="focus-box">
+                                    <p>You completed <span class="big-num" id="monthly-sessions">0</span></p>
+                                    <p><span class="highlight">FOCUS SESSION</span> this month</p>
+                                </div>
+                            </div>
+                            <div class="focus-chart">
+                                <div class="chart">
+                                    <div class="chart-label">MIN</div>
+                                    <div class="chart-grid">
+                                        <div class="y-axis" id="yAxisMarks"></div>
+                                        <div class="chart-content" id="barContainer"></div>
+                                        <div class="x-axis"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mood -->
+                <div class="mood-section">
+                    <div class="mood-text"><h2>MOOD INDEX FOR EACH MONTH:</h2></div>
+                    <div class="mood-chart">
+                        <div class="chart-area">
+                            <div class="bars">
+                                <div class="bar">
+                                    <img src="/static/images/star.png" alt="gray star" class="star">
+                                    <div class="bar-shape">
+                                        <img src="/static/images/emotion1.png" alt="mood icon" class="icon">
+                                    </div>
+                                    <div class="value" data-mood="1">0.00%</div>
+                                </div>
+                                <div class="bar">
+                                    <img src="/static/images/star.png" alt="gray star" class="star">
+                                    <div class="bar-shape">
+                                        <img src="/static/images/emotion2.png" alt="mood icon" class="icon">
+                                    </div>
+                                    <div class="value" data-mood="2">0.00%</div>
+                                </div>
+                                <div class="bar">
+                                    <img src="/static/images/star.png" alt="gray star" class="star">
+                                    <div class="bar-shape">
+                                        <img src="/static/images/emotion3.png" alt="mood icon" class="icon">
+                                    </div>
+                                    <div class="value" data-mood="3">0.00%</div>
+                                </div>
+                                <div class="bar">
+                                    <img src="/static/images/star.png" alt="gray star" class="star">
+                                    <div class="bar-shape">
+                                        <img src="/static/images/emotion4.png" alt="mood icon" class="icon">
+                                    </div>
+                                    <div class="value" data-mood="4">0.00%</div>
+                                </div>
+                                <div class="bar">
+                                    <img src="/static/images/star.png" alt="gray star" class="star">
+                                    <div class="bar-shape">
+                                        <img src="/static/images/emotion5.png" alt="mood icon" class="icon">
+                                    </div>
+                                    <div class="value" data-mood="5">0.00%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="all-content" class="all-content">
+                <!-- Plan Progress -->
+                <div class="plan-progress">
+                    <h2>PLAN PROGRESS:</h2>
+                    <div class="container-prog">
+                        <div class="left-panel">
+                            <div class="task">
+                                <div class="icon"><img src="/static/images/red 2.png" alt=""></div>
+                                <div class="progress-bar">
+                                    <div class="progress-bar-fill" style="width: 60%; background: #F4A099"></div>
+                                </div>
+                                <div class="badge" style="background: #F4A099">3/5</div>
+                            </div>
+                            <div class="task">
+                                <div class="icon"><img src="/static/images/blue 2.png" alt=""></div>
+                                <div class="progress-bar" style="background: #A3C1F3">
+                                    <div class="progress-bar-fill" style="width: 100%; background: #A3C1F3"></div>
+                                </div>
+                                <div class="badge" style="background: #A3C1F3">2/2</div>
+                            </div>
+                            <div class="task">
+                                <div class="icon"><img src="/static/images/yellow 2.png" alt=""></div>
+                                <div class="progress-bar" style="background: #FDE9A8">
+                                    <div class="progress-bar-fill" style="width: 100%; background: #FDE9A8"></div>
+                                </div>
+                                <div class="badge" style="background: #FDE9A8">2/2</div>
+                            </div>
+                            <div class="task">
+                                <div class="icon"><img src="/static/images/green 2.png" alt=""></div>
+                                <div class="progress-bar" style="background: #C9E2D0">
+                                    <div class="progress-bar-fill" style="width: 100%; background: #C9E2D0"></div>
+                                </div>
+                                <div class="badge" style="background: #C9E2D0">1/1</div>
+                            </div>
+                        </div>
+                        <div class="right-panel">
+                            <canvas id="chartCanvas-all" width="200" height="200"></canvas>
+                            <div class="toggle-switch" id="chartToggle-all"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Focus -->
+                <div class="focus-section">
+                    <div class="focus-text"><h2>FOCUS RECORD:</h2></div>
+                    <div class="focus-record">
+                        <div class="focus-container">
+                            <div class="focus-left">
+                                <div class="focus-box">
+                                    <p>You completed <span class="big-num" id="all-minutes">0</span></p>
+                                    <p><span class="highlight">MIN</span> of focus this year</p>
+                                </div>
+                                <div class="focus-box">
+                                    <p>You completed <span class="big-num" id="all-sessions">0</span></p>
+                                    <p><span class="highlight">FOCUS SESSION</span> this year</p>
+                                </div>
+                            </div>
+                            <div class="focus-chart">
+                                <div class="chart">
+                                    <div class="chart-label">MIN</div>
+                                    <div class="chart-grid">
+                                        <div class="y-axis" id="yAxisMarks-all"></div>
+                                        <div class="chart-content" id="barContainer-all"></div>
+                                        <div class="x-axis"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mood -->
+                <div class="mood-section">
+                    <div class="mood-text"><h2>MOOD INDEX:</h2></div>
+                    <div class="mood-chart">
+                        <div class="chart-area">
+                            <div class="bars">
+                                <div class="bar">
+                                    <img src="/static/images/star.png" alt="gray star" class="star">
+                                    <div class="bar-shape">
+                                        <img src="/static/images/emotion1.png" alt="mood icon" class="icon">
+                                    </div>
+                                    <div class="value" data-mood="1">0.00%</div>
+                                </div>
+                                <div class="bar">
+                                    <img src="/static/images/star.png" alt="gray star" class="star">
+                                    <div class="bar-shape">
+                                        <img src="/static/images/emotion2.png" alt="mood icon" class="icon">
+                                    </div>
+                                    <div class="value" data-mood="2">0.00%</div>
+                                </div>
+                                <div class="bar">
+                                    <img src="/static/images/star.png" alt="gray star" class="star">
+                                    <div class="bar-shape">
+                                        <img src="/static/images/emotion3.png" alt="mood icon" class="icon">
+                                    </div>
+                                    <div class="value" data-mood="3">0.00%</div>
+                                </div>
+                                <div class="bar">
+                                    <img src="/static/images/star.png" alt="gray star" class="star">
+                                    <div class="bar-shape">
+                                        <img src="/static/images/emotion4.png" alt="mood icon" class="icon">
+                                    </div>
+                                    <div class="value" data-mood="4">0.00%</div>
+                                </div>
+                                <div class="bar">
+                                    <img src="/static/images/star.png" alt="gray star" class="star">
+                                    <div class="bar-shape">
+                                        <img src="/static/images/emotion5.png" alt="mood icon" class="icon">
+                                    </div>
+                                    <div class="value" data-mood="5">0.00%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- AI Chat -->
+        <div class="message-box-wrapper">
+            <div class="logoMain">
+                <img src="/static/images/m.png" alt="">
+                <h1>agicMeow</h1>
+            </div>
+            <div class="extra">
+                <button class="extra-btn" id="bunny"><img src="/static/images/bunny.png" alt=""></button>
+                <button class="extra-btn" id="discover" onclick="window.location.href='/discover';"><img src="/static/images/discover.png" alt=""></button>
+            </div>
+
+            <div class="reminder-panel" id="reminderPanel">
+                <div class="section">
+                    <div class="section-title">Chat History</div>
+                    <button id="newChatBtn" style="font-family: 'Jua', sans-serif; font-size: 16px; padding: 8px; margin: 0 10px 10px; border: 2px solid black; border-radius: 10px; background: white; cursor: pointer;">Start New Chat</button>
+                    <div class="chat-history" id="chatHistory"></div>
+                </div>
+            </div>
+
+            <div class="message-container">
+                <div class="chat">
+                    <div class="message-box">
+                        <div class="chatbot">
+                            <div class="Block__Messages" id="Block__Messages"></div>
+                        </div>
+                        <div class="message-box-input">
+                            <input type="text" placeholder="..." class="Input" id="Input">
+                            <button class="send-btn" id="send-btn"><img src="/static/images/send.png" alt="Send" style="width: 60px;"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button><img src="/static/images/statistics.png" alt=""></button>
+                    <button><img src="/static/images/addPlan.png" alt=""></button>
+                    <button><img src="/static/images/goals.png" alt=""></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/statistics.js"></script>
+</body>
+</html>

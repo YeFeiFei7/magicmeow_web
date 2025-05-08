@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - MagicMeow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap" rel="stylesheet">
+    <style>
+        .profile-field.username-field {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .change-btn {
+            margin-left: 0;
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid black;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Jua', sans-serif;
+            font-size: 16px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            height: 40px;
+        }
+        body.dark .change-btn,
+        body.dark-blue .change-btn,
+        body.dark-purple .change-btn {
+            background: #4A4A4A;
+            border: 2px solid #E0E0E0;
+            color: #E0E0E0;
+        }
+        body.dark-blue .change-btn {
+            border: 2px solid #A0B0D0;
+            background: #3A4A64;
+        }
+        body.dark-purple .change-btn {
+            border: 2px solid #B0A0D0;
+            background: #4A3A64;
+        }
+        .change-btn:hover {
+            background: #f0f0f0;
+        }
+        body.dark .change-btn:hover,
+        body.dark-blue .change-btn:hover,
+        body.dark-purple .change-btn:hover {
+            background: #5A5A5A;
+        }
+        body.dark-blue .change-btn:hover {
+            background: #4A5A74;
+        }
+        body.dark-purple .change-btn:hover {
+            background: #5A4A74;
+        }
+        .logoMain h1 {
+            align-items: flex-end;
+            font-size: 40px;
+            color: #CEB3FF;
+            margin-top: 50px;
+            font-family: 'Love Ya Like A Sister', cursive;
+            font-weight: lighter;
+        }
+        body.dark .logoMain h1,
+        body.dark-blue .logoMain h1,
+        body.dark-purple .logoMain h1 {
+            color: #D4AFFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <div class="user-info">
+                    <img src="{{ user.avatar if user.avatar else url_for('static', filename='images/user.png') }}" alt="User" class="avatar">
+                    <div class="user-text">
+                        <p class="sidebar-text user">{{ session['username'] }}</p>
+                        <p class="sidebar-text user" id="days">day</p>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="menu">
+                    <button class="menu-btn" onclick="window.location.href='/home'">
+                        <img src="{{ url_for('static', filename='images/home.png') }}" alt="Home">
+                        <span class="sidebar-text">Home</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/viewMonthly'">
+                        <img src="{{ url_for('static', filename='images/view.png') }}" alt="View">
+                        <span class="sidebar-text">View</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/focus'">
+                        <img src="{{ url_for('static', filename='images/clock.png') }}" alt="Focus Time">
+                        <span class="sidebar-text">Focus Time</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/statistics'">
+                        <img src="{{ url_for('static', filename='images/statistics.png') }}" alt="Data Statistic">
+                        <span class="sidebar-text">Data Statistic</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/setting'">
+                        <img src="{{ url_for('static', filename='images/setting.png') }}" alt="Setting">
+                        <span class="sidebar-text">Setting</span>
+                    </button>
+                    <button class="menu-btn" onclick="window.location.href='/aboutUs'">
+                        <img src="{{ url_for('static', filename='images/aboutUs.png') }}" alt="About Us">
+                        <span class="sidebar-text">About Us</span>
+                    </button>
+                    <button class="add-plan" onclick="window.location.href='/addPlan'">
+                        <img src="{{ url_for('static', filename='images/addPlan.png') }}" alt="Add Plan" class="plus-icon" style="width: 50px;">
+                        <span class="sidebar-text">Add Plan</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="logoMain">
+                <img src="{{ url_for('static', filename='images/m.png') }}" alt="">
+                <h1>agicMeow</h1>
+            </div>
+
+            <div class="profile-box">
+                <h2 class="profile-title">PROFILE</h2>
+                <div class="divider"></div>
+                <div class="profile-field">
+                    <label>AVATAR</label>
+                    <div class="avatar-section">
+                        <img src="{{ user.avatar if user.avatar else url_for('static', filename='images/user.png') }}" alt="Avatar" class="profile-avatar">
+                        <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+                        <button class="upload-btn" onclick="document.getElementById('avatar-upload').click()">Upload New Avatar</button>
+                    </div>
+                </div>
+                <div class="profile-field username-field">
+                    <label>USER NAME</label>
+                    <input type="text" id="username-input" value="{{ session['username'] }}">
+                    <button class="change-btn" onclick="changeUsername()">Change</button>
+                </div>
+                <button class="logout-btn" onclick="window.location.href='/logout'">Log Out</button>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/profile.js') }}" defer></script>
+    <script>
+        // 应用保存的主题
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.classList.add(savedTheme);
+        });
+    </script>
+</body>
+</html>

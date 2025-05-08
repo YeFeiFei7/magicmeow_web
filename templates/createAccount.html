@@ -4,9 +4,176 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MagicMeow Sign Up</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/create_account.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Love+Ya+Like+A+Sister&family=Jua&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffffff;
+            font-family: 'Jua', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .container {
+            display: flex;
+            width: 1680px;
+            height: 850px;
+            background: #fff;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .signup-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .image-box {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffffff;
+        }
+
+        .logo {
+            display: flex;
+            align-items: flex-end;
+            font-family: 'Love Ya Like A Sister', cursive;
+            font-size: 40px;
+            color: #CEB3FF;
+            margin-bottom: 30px;
+            margin-top: -80px;
+        }
+
+        .logo img {
+            width: 100px;
+            height: auto;
+            margin-right: -5px;
+            position: relative;
+            bottom: -15px;
+        }
+
+        .form-box {
+            width: 90%;
+            max-width: 350px;
+            height: 470px;
+            border: 2px solid black;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .form-box h1 {
+            color: #C7B7F5;
+            margin-bottom: 10px;
+            font-size: 35px;
+            font-weight: lighter;
+            margin-top: 0;
+        }
+
+        .form-box h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-box input {
+            width: 80%;
+            height: 35px;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #444;
+            border-radius: 10px;
+            font-size: 20px;
+            font-family: 'Jua', sans-serif;
+        }
+
+        .tooltip {
+            display: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -120px;
+            width: 200px;
+            padding: 10px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 2px solid #444;
+            font-size: 12px;
+            z-index: 10;
+        }
+
+        .tooltip ul {
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .tooltip li {
+            margin-bottom: 6px;
+            text-align: left;
+            list-style: none;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .tooltip li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 4px;
+            width: 10px;
+            height: 10px;
+            background-color: #f88;
+            border-radius: 50%;
+        }
+
+        .form-box button {
+            width: 87%;
+            padding: 15px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            margin-top: 30px;
+            cursor: pointer;
+            font-family: 'Jua', sans-serif;
+            font-size: 24px;
+        }
+
+        .form-box button:hover {
+            background-color: #444;
+        }
+
+        .separator {
+            width: 2px;
+            background-color: #4a2c2a;
+            height: 90%;
+            align-self: center;
+        }
+
+        .image-box img {
+            width: 80%;
+            max-width: 886px;
+        }
+
+        .error {
+            color: #CEB3FF;
+            font-size: 16px;
+            margin-top: 10px;
+            font-family: 'Jua', sans-serif;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -18,20 +185,21 @@
             <div class="form-box">
                 <h1>Welcome, new user!</h1>
                 <h2>Create account</h2>
-                <form action="{{ url_for('create_account') }}" method="POST">
+                <form id="signup-form" action="{{ url_for('create_account') }}" method="POST">
                     {{ form.hidden_tag() }}
                     {{ form.username(class="input-field", placeholder="new user name") }}
                     {{ form.password(class="input-field", placeholder="password", id="password") }}
                     <div class="tooltip" id="tooltip">
                         <ul>
-                            <li>Uppercase letters (A–Z)</li>
-                            <li>Lowercase letters (a–z)</li>
-                            <li>Numbers (0–9)</li>
-                            <li>Special characters (e.g. !@#$%^&*)</li>
+                            <li id="uppercase">Uppercase letters (A–Z)</li>
+                            <li id="lowercase">Lowercase letters (a–z)</li>
+                            <li id="number">Numbers (0–9)</li>
+                            <li id="special">Special characters (e.g. !@#$%^&*)</li>
+                            <li id="length">At least 8 characters</li>
                         </ul>
                     </div>
-                    {{ form.confirm_password(class="input-field", placeholder="Confirm Password") }}
-                    <div class="error" style="color: red;">
+                    {{ form.confirm_password(class="input-field", placeholder="Confirm Password", id="confirm_password") }}
+                    <div class="error" id="error-message">
                         {% with messages = get_flashed_messages(category_filter=['error']) %}
                             {% if messages %}
                                 {{ messages[0] }}
@@ -47,6 +215,74 @@
             <img src="{{ url_for('static', filename='images/cats.png') }}" alt="Cute cat illustration">
         </div>
     </div>
-    <script src="{{ url_for('static', filename='js/create_account.js') }}"></script>
+    <script>
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const tooltip = document.getElementById('tooltip');
+            const requirements = [
+                { id: 'uppercase', regex: /[A-Z]/, text: 'Uppercase letters (A–Z)' },
+                { id: 'lowercase', regex: /[a-z]/, text: 'Lowercase letters (a–z)' },
+                { id: 'number', regex: /[0-9]/, text: 'Numbers (0–9)' },
+                { id: 'special', regex: /[!@#$%^&*]/, text: 'Special characters (e.g. !@#$%^&*)' },
+                { id: 'length', regex: /.{8,}/, text: 'At least 8 characters' }
+            ];
+
+            requirements.forEach(req => {
+                const li = document.getElementById(req.id);
+                const isValid = req.regex.test(password);
+                li.style.color = isValid ? 'green' : 'red';
+                li.style.setProperty('--before-bg', isValid ? 'green' : '#f88');
+            });
+
+            tooltip.style.display = 'block';
+        });
+
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            const errorMessage = document.getElementById('error-message');
+            const requirements = [
+                { regex: /[A-Z]/, message: 'Password must include at least one uppercase letter.' },
+                { regex: /[a-z]/, message: 'Password must include at least one lowercase letter.' },
+                { regex: /[0-9]/, message: 'Password must include at least one number.' },
+                { regex: /[!@#$%^&*]/, message: 'Password must include at least one special character.' },
+                { regex: /.{8,}/, message: 'Password must be at least 8 characters long.' }
+            ];
+
+            // Check password requirements
+            for (const req of requirements) {
+                if (!req.regex.test(password)) {
+                    e.preventDefault();
+                    errorMessage.textContent = req.message;
+                    return;
+                }
+            }
+
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                errorMessage.textContent = 'Passwords do not match.';
+                return;
+            }
+        });
+
+        // Hide tooltip when clicking outside password field
+        document.addEventListener('click', function(e) {
+            const passwordField = document.getElementById('password');
+            const tooltip = document.getElementById('tooltip');
+            if (!passwordField.contains(e.target)) {
+                tooltip.style.display = 'none';
+            }
+        });
+
+        // Update ::before background color using custom property
+        const style = document.createElement('style');
+        style.textContent = `
+            .tooltip li::before {
+                background-color: var(--before-bg, #f88);
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>
